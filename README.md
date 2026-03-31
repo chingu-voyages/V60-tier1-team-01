@@ -35,7 +35,8 @@ your repo access and to practice PR'ing with your team *before* you start
 coding!
 
 - Dustin Hoeppner: [GitHub](https://github.com/dhoepp) / [LinkedIn](https://linkedin.com/in/dustin-hoeppner)
-- Zien Alhawshi #2: [GitHub](https://github.com/Zien-Alhawshi) / [LinkedIn](https://www.linkedin.com/in/zien-alhawshi-a5235a25b/)
+- Zien Alhawshi: [GitHub](https://github.com/Zien-Alhawshi) / [LinkedIn](https://www.linkedin.com/in/zien-alhawshi-a5235a25b/)
+- Gabriele Zenobi: [GitHub](https://github.com/GabrieleRepo) / [LinkedIn](https://linkedin.com/in/gabriele-zenobi)
 
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
