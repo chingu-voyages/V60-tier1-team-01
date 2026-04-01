@@ -39,4 +39,4 @@ coding!
 - Gabriele Zenobi: [GitHub](https://github.com/GabrieleRepo) / [LinkedIn](https://linkedin.com/in/gabriele-zenobi)
 
    ...
-- Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Priscilla Anim: [GitHub](https://github.com/priscilla-anim) / [LinkedIn](https://linkedin.com/in/priscilla-koramah-anim)
