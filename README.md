@@ -1,3 +1,17 @@
+## Installation
+
+```bash
+#clone repository and change directory
+git clone https://github.com/chingu-voyages/V60-tier1-team-01.git
+cd V60-tier1-team-01
+
+#install dependencies
+npm ci
+
+#run dev server
+npm run dev
+```
+
 # voyage-tasks
 
 Your project's `readme` is as important to success as your code. For 
