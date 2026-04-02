@@ -38,5 +38,5 @@ coding!
 - Zien Alhawshi: [GitHub](https://github.com/Zien-Alhawshi) / [LinkedIn](https://www.linkedin.com/in/zien-alhawshi-a5235a25b/)
 - Gabriele Zenobi: [GitHub](https://github.com/GabrieleRepo) / [LinkedIn](https://linkedin.com/in/gabriele-zenobi)
 
-   ...
+- Martin Karimi  : [GitHub](https://github.com/buzzcodier) / [LinkedIn](www.linkedin.com/in/martin-rubi-92b51a400)
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
