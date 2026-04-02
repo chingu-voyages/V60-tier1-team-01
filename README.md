@@ -6,7 +6,7 @@ git clone https://github.com/chingu-voyages/V60-tier1-team-01.git
 cd V60-tier1-team-01
 
 #install dependencies
-npm i
+npm ci
 
 #run dev server
 npm run dev
@@ -43,10 +43,6 @@ Meeting Agenda templates (located in the `/docs` directory in this repo):
 
 ## Our Team
 
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team *before* you start
-coding!
 
 - Dustin Hoeppner: [GitHub](https://github.com/dhoepp) / [LinkedIn](https://linkedin.com/in/dustin-hoeppner)
 - Zien Alhawshi: [GitHub](https://github.com/Zien-Alhawshi) / [LinkedIn](https://www.linkedin.com/in/zien-alhawshi-a5235a25b/)
