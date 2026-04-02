@@ -6,7 +6,7 @@ git clone https://github.com/chingu-voyages/V60-tier1-team-01.git
 cd V60-tier1-team-01
 
 #install dependencies
-npm ci
+npm i
 
 #run dev server
 npm run dev
