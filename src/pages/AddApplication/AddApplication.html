@@ -1,5 +1,48 @@
-<section class="pt-20">
-    <h2>
-        Add Application
-    </h2>
-</section>
+<main class="pt-20 flex justify-center px-4">
+  <div class="bg-white rounded-lg shadow-md p-8 w-full max-w-lg">
+    <h1 class="text-center mb-6 !text-[#274C25]">Add Application</h1>
+    <form id="applicationForm" class="flex flex-col gap-4">
+    <div>
+      <label for="company">Company Name</label>
+      <input type="text" id="company" name="company">
+        <small class="text-red-500"></small>
+    </div>
+
+    <div>
+      <label for="role">Role</label>
+      <input type="text" id="role" name="role">
+        <small class="text-red-500"></small>
+    </div>
+
+    <div>
+      <label for="date">Date Applied</label>
+      <input type="date" id="date" name="date">
+        <small class="text-red-500"></small>
+    </div>
+
+    <div>
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location">
+        <small class="text-red-500"></small>
+    </div>
+
+    <div>
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="applied">Applied</option>
+        <option value="interview">Interview</option>
+        <option value="offer">Offer</option>
+        <option value="rejected">Rejected</option>
+      </select>
+        <small class="text-red-500"></small>
+    </div>
+
+    <div>
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes"></textarea>
+    </div>
+
+    <button type="submit" id="submitBtn" class="btn">Submit Application</button>
+    </form>
+  </div>
+</main>
