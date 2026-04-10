@@ -6,7 +6,7 @@ export function AddApplication() {
   setTimeout(() => {
     const form = document.getElementById('applicationForm');
 
-    form.addEventListener("submit",(e)=>{
+    form.addEventListener("submit", async (e)=>{
       e.preventDefault();
 
       const company = document.getElementById('company');
@@ -67,7 +67,7 @@ export function AddApplication() {
       // If all fields are valid, show success message and reset form
 
       if (isValid){
-        saveApplication({
+        await saveApplication({
           company: company.value,
           role: role.value,
           date: date.value,
