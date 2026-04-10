@@ -14,6 +14,7 @@ npm run dev
 
 <details>
 <summary>Click to view voyage tasks</summary>
+
 # voyage-tasks
 
 Your project's `readme` is as important to success as your code. For 
