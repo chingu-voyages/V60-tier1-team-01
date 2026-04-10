@@ -1,4 +1,6 @@
 import template from './AddApplication.html?raw';
+import { saveApplication } from '../../utils/storage.js';
+
 
 export function AddApplication() {
   setTimeout(() => {
@@ -65,6 +67,13 @@ export function AddApplication() {
       // If all fields are valid, show success message and reset form
 
       if (isValid){
+        saveApplication({
+          company: company.value,
+          role: role.value,
+          date: date.value,
+          location: location.value,
+          status: status.value,
+        });
         alert(" Application added successfully!");
         form.reset();
       }
