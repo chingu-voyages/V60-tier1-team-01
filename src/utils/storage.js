@@ -1,3 +1,6 @@
+import { supabase } from './supabase.js';
+
+
 const useSupabase = !!import.meta.env.VITE_SUPABASE_URL;
 const STORAGE_KEY = 'job_applications'
 
@@ -6,19 +9,27 @@ let getApplications, saveApplication, updateApplication, deleteApplication;
 if (useSupabase) {
 
   getApplications = async () => {
-    // TODO: supabase implementation
+    const { data, error } = await supabase.from('applications').select('*');
+    if (error) throw error;
+    return data;
   }
 
   saveApplication = async (application) => {
-    // TODO: supabase implementation
+    const { data, error } = await supabase.from('applications').insert([application]).select().single();
+    if (error) throw error;
+    return data;
   }
 
   updateApplication = async (id, data) => {
-    // TODO: supabase implementation
+    const { data: updated, error } = await supabase.from('applications').update(data).eq('id', id).select().single();
+    if (error) throw error;
+    return data;
   }
 
   deleteApplication = async (id) => {
-    // TODO: supabase implementation
+    const { error } = await supabase.from('applications').delete().eq('id', id);
+    if (error) throw error;
+    return data;
   }
 
 } else {
