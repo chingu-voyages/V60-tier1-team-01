@@ -4,9 +4,10 @@ import { Footer } from './components/layout/Footer/Footer.js';
 import { Home } from './pages/Home/Home.js';
 import { AddApplication } from './pages/AddApplication/AddApplication.js';
 import { Applications } from './pages/Applications/Applications.js';
+import { deleteApplication } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
 
-//url navigation 
+//url navigation
 const routes = {
   '': Home,
   'add-application': AddApplication,
@@ -23,6 +24,15 @@ async function render() {
     ${page ? await page() : '<p>Page not found</p>'}
     ${Footer()}
   `;
+
+  document.querySelectorAll('[data-id]').forEach(button => {
+    button.addEventListener('click', async () => {
+      if (window.confirm('Are you sure you want to delete this application?')) {
+        await deleteApplication(button.dataset.id);
+        await render();
+      }
+    });
+  });
 }
 
 window.addEventListener('hashchange', render);
