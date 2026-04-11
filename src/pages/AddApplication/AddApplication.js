@@ -1,10 +1,12 @@
 import template from './AddApplication.html?raw';
+import { saveApplication } from '../../utils/storage.js';
+
 
 export function AddApplication() {
   setTimeout(() => {
     const form = document.getElementById('applicationForm');
 
-    form.addEventListener("submit",(e)=>{
+    form.addEventListener("submit", async (e)=>{
       e.preventDefault();
 
       const company = document.getElementById('company');
@@ -65,6 +67,13 @@ export function AddApplication() {
       // If all fields are valid, show success message and reset form
 
       if (isValid){
+        await saveApplication({
+          company: company.value,
+          role: role.value,
+          date: date.value,
+          location: location.value,
+          status: status.value,
+        });
         alert(" Application added successfully!");
         form.reset();
       }

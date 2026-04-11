@@ -12,6 +12,9 @@ npm ci
 npm run dev
 ```
 
+<details>
+<summary>Click to view voyage tasks</summary>
+
 # voyage-tasks
 
 Your project's `readme` is as important to success as your code. For 
@@ -40,6 +43,7 @@ Meeting Agenda templates (located in the `/docs` directory in this repo):
 - Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
 - Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
 - Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+</details>
 
 ## Our Team
 
