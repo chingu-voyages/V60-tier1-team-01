@@ -15,12 +15,12 @@ const routes = {
 };
 
 //page renderer for dynamic loading
-function render() {
+async function render() {
   const hash = window.location.hash.slice(1) || '';
   const page = routes[hash];
   document.getElementById('app').innerHTML = `
     ${Header()}
-    ${page ? page() : '<p>Page not found</p>'}
+    ${page ? await page() : '<p>Page not found</p>'}
     ${Footer()}
   `;
 }
