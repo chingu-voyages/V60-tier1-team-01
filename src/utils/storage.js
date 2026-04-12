@@ -23,13 +23,12 @@ if (useSupabase) {
   updateApplication = async (id, data) => {
     const { data: updated, error } = await supabase.from('applications').update(data).eq('id', id).select().single();
     if (error) throw error;
-    return data;
+    return updated;
   }
 
   deleteApplication = async (id) => {
     const { error } = await supabase.from('applications').delete().eq('id', id);
     if (error) throw error;
-    return data;
   }
 
 } else {
