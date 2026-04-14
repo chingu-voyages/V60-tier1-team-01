@@ -1,9 +1,13 @@
 import { getApplications } from '../../utils/storage.js';
 
-export async function Applications() {
+export async function Applications(filter = "All") {
   const applications = await getApplications();
 
-  const list = applications.map(app => `
+  const applicationsFiltered = filter === "All"
+    ? applications
+    : applications.filter(application => application.status.toLowerCase() === filter.toLowerCase());
+
+  const list = applicationsFiltered.map(app => `
     <div class="group flex items-center justify-between p-4 border rounded mb-2">
       <span>${app.company}</span>
       <span>${app.role}</span>
@@ -37,8 +41,12 @@ export async function Applications() {
   `;
 }
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   if (e.target.dataset.filter) {
     console.log("Filter selected:", e.target.dataset.filter);
+
+    const filter = e.target.dataset.filter;
+    const html = await Applications(filter);
+    document.body.innerHTML = html;
   }
 });
