@@ -15,6 +15,15 @@ export async function Applications() {
 
   return `
     <main class="pt-20 px-6 max-w-3xl mx-auto">
+      <h1>Filter by Status:</h1>
+      <div class="flex gap-4 mb-6">
+        <button data-filter="All">All</button>
+        <button data-filter="Applied">Applied</button>
+        <button data-filter="Interview">Interview</button>
+        <button data-filter="Offer">Offer</button>
+        <button data-filter="Rejected">Rejected</button>
+      </div>
+      
       <h1>Applications</h1>
       <div class="group flex items-center justify-between p-1 rounded mb-2">
         <span>Company</span>
@@ -27,3 +36,9 @@ export async function Applications() {
     </main>
   `;
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target.dataset.filter) {
+    console.log("Filter selected:", e.target.dataset.filter);
+  }
+});
