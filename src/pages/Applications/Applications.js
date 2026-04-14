@@ -1,9 +1,8 @@
 import { getApplications } from '../../utils/storage.js';
 
-export async function Applications() {
-  const applications = await getApplications();
-
-  const list = applications.map(app => `
+// ===== helpers =====
+function renderApplications(applications) {
+  return applications.map(app => `
     <div class="group flex items-center justify-between p-4 border rounded mb-2">
       <span>${app.company}</span>
       <span>${app.role}</span>
@@ -11,8 +10,12 @@ export async function Applications() {
       <span>${app.date}</span>
       <button class="opacity-0 group-hover:opacity-100 text-red-500" data-id="${app.id}">✕</button>
     </div>
-  `).join('');
+    `).join('');
+}
 
+// ===== main =====
+export async function Applications() {
+  const applications = await getApplications();
   return `
     <main class="pt-20 px-6 max-w-3xl mx-auto">
       <h1>Filter by Status:</h1>
@@ -34,12 +37,13 @@ export async function Applications() {
       </div>
 
       <div id="applications-list">
-        ${list}
+        ${renderApplications(applications)}
       </div>
     </main>
   `;
 }
 
+// ===== events =====
 document.addEventListener("click", async (e) => {
   if (!e.target.dataset.filter) return;
   const filter = e.target.dataset.filter;
@@ -52,15 +56,5 @@ document.addEventListener("click", async (e) => {
           app.status.toLowerCase() === filter.toLowerCase()
         );
 
-  const list = applicationsFiltered.map(app => `
-    <div class="group flex items-center justify-between p-4 border rounded mb-2">
-      <span>${app.company}</span>
-      <span>${app.role}</span>
-      <span>${app.status}</span>
-      <span>${app.date}</span>
-      <button class="opacity-0 group-hover:opacity-100 text-red-500" data-id="${app.id}">✕</button>
-    </div>
-  `).join('');
-
-  document.getElementById("applications-list").innerHTML = list;
+  document.getElementById("applications-list").innerHTML = renderApplications(applicationsFiltered);
 });
