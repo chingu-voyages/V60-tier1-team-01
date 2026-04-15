@@ -9,7 +9,7 @@ export async function Applications() {
       <span>${app.role}</span>
       <span data-id="${app.id}" data-status="${app.status}" class="border border-transparent hover:border-gray-300 p-1 rounded">${app.status}</span>
       <span>${app.date}</span>
-      <button class="opacity-0 group-hover:opacity-100 text-red-500" data-delete="${app.id}">✕</button>
+      <button class="opacity-0 cursor-pointer group-hover:opacity-100 text-red-500" data-delete="${app.id}">✕</button>
     </div>
   `).join('');
 
