@@ -21,6 +21,17 @@ if (useSupabase) {
   }
 
   updateApplication = async (id, data) => {
+    const { data: current, error: fetchError } = await supabase.from('applications').select('status').eq('id', id).single();
+    if (fetchError) throw fetchError;
+
+    if (data.status && data.status !== current.status) {
+      await supabase.from('status_history').insert([{
+        application_id: id,
+        status: data.status,
+        changed_at: new Date().toISOString()
+      }]);
+    }
+
     const { data: updated, error } = await supabase.from('applications').update(data).eq('id', id).select().single();
     if (error) throw error;
     return updated;
@@ -55,11 +66,19 @@ if (useSupabase) {
     const applications = getApplications()
     const index = applications.findIndex(app => app.id === id)
     if (index === -1) return null
-    applications[index] = {
-      ...applications[index],
-      ...data,
-      updatedAt: new Date().toISOString()
+
+    if (data.status && data.status !== applications[index].status) {
+      const history = JSON.parse(localStorage.getItem('status_history') || '[]')
+      history.push({
+        id: crypto.randomUUID(),
+        application_id: id,
+        status: data.status,
+        changed_at: new Date().toISOString()
+      })
+      localStorage.setItem('status_history', JSON.stringify(history))
     }
+
+    applications[index] = { ...applications[index], ...data, updatedAt: new Date().toISOString() }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(applications))
     return applications[index]
   }
