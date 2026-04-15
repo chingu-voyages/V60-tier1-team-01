@@ -73,6 +73,7 @@ export function AddApplication() {
           date: date.value,
           location: location.value,
           status: status.value,
+          //   createdAt: new Date().toISOString(), // this is to aid in getting recent entry in dashboard
         });
         alert(" Application added successfully!");
         form.reset();
