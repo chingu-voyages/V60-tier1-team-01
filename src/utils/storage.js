@@ -9,7 +9,7 @@ let getApplications, saveApplication, updateApplication, deleteApplication;
 if (useSupabase) {
 
   getApplications = async () => {
-    const { data, error } = await supabase.from('applications').select('*');
+    const { data, error } = await supabase.from('applications').select('*').order('id');
     if (error) throw error;
     return data;
   }
