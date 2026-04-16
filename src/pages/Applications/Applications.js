@@ -9,6 +9,7 @@ const activeBtnClasses = "bg-green-900 text-white";
 const inactiveBtnClasses = "bg-white text-gray-500 hover:bg-green-50 hover:text-green-900";
 
 // ===== helpers =====
+// returns applications filtered by status
 function filterApplications(applications, filter) {
   if (filter === "All") return applications;
 
@@ -29,6 +30,7 @@ function renderApplications(applications) {
     `).join('');
 }
 
+// renders filter buttons dynamically based on available filters
 function renderFilterButtons() {
   return filters.map(filter => `
     <button 
@@ -73,6 +75,7 @@ export async function Applications() {
 
 // ===== events =====
 document.addEventListener("click", async (e) => {
+  // handle filter button clicks via data-filter attribute
   if (!e.target.dataset.filter) return;
   activeFilter = e.target.dataset.filter;
   const applications = await getApplications();
@@ -80,6 +83,7 @@ document.addEventListener("click", async (e) => {
 
   document.getElementById("applications-list").innerHTML = renderApplications(applicationsFiltered);
 
+  // update filter buttons styles based on the active filter
   document.querySelectorAll("[data-filter]").forEach(btn => {
     if (btn.dataset.filter === activeFilter) {
       btn.classList.add(...activeBtnClasses.split(" "));
