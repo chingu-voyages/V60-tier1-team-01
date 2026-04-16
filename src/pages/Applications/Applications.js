@@ -8,6 +8,14 @@ const activeBtnClasses = "bg-green-900 text-white";
 const inactiveBtnClasses = "bg-white text-gray-500 hover:bg-green-50 hover:text-green-900";
 
 // ===== helpers =====
+function filterApplications(applications, filter) {
+  if (filter === "All") return applications;
+
+  return applications.filter(app =>
+    app.status.toLowerCase() === filter.toLowerCase()
+  );
+}
+
 function renderApplications(applications) {
   return applications.map(app => `
     <div class="group flex items-center justify-between p-4 border rounded mb-2">
@@ -23,6 +31,7 @@ function renderApplications(applications) {
 // ===== main =====
 export async function Applications() {
   const applications = await getApplications();
+  const filteredApplications = filterApplications(applications, activeFilter);
   return `
     <main class="pt-20 px-6 max-w-3xl mx-auto">
       <h1>Filter by Status:</h1>
@@ -69,7 +78,7 @@ export async function Applications() {
       </div>
 
       <div id="applications-list">
-        ${renderApplications(applications)}
+        ${renderApplications(filteredApplications)}
       </div>
     </main>
   `;
@@ -80,13 +89,7 @@ document.addEventListener("click", async (e) => {
   if (!e.target.dataset.filter) return;
   activeFilter = e.target.dataset.filter;
   const applications = await getApplications();
-
-  const applicationsFiltered =
-    activeFilter === "All"
-      ? applications
-      : applications.filter(app =>
-          app.status.toLowerCase() === activeFilter.toLowerCase()
-        );
+  const applicationsFiltered = filterApplications(applications, activeFilter);
 
   document.getElementById("applications-list").innerHTML = renderApplications(applicationsFiltered);
 
