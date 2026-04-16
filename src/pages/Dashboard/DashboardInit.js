@@ -86,7 +86,7 @@ function renderLatestEntry(applications) {
     }
     const latest  = applications.reduce(
         (latest,curent)=> {
-            return new Date(curent.createdAt) > new Date(latest.createdAt) ? curent : latest;
+            return new Date(curent.created_at) > new Date(latest.created_at) ? curent : latest;
         })
     
     compEl.textContent = latest.company;
