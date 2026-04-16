@@ -4,8 +4,9 @@ import { Footer } from './components/layout/Footer/Footer.js';
 import { Home } from './pages/Home/Home.js';
 import { AddApplication } from './pages/AddApplication/AddApplication.js';
 import { Applications } from './pages/Applications/Applications.js';
-import { deleteApplication } from './utils/storage.js';
+import { deleteApplication, updateApplication } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
+import { initDashboard } from './pages/Dashboard/DashboardInit.js';
 
 //url navigation
 const routes = {
@@ -24,13 +25,40 @@ async function render() {
     ${page ? await page() : '<p>Page not found</p>'}
     ${Footer()}
   `;
+  if (hash === 'dashboard') {
+    await initDashboard();
+  }
 
-  document.querySelectorAll('[data-id]').forEach(button => {
-    button.addEventListener('click', async () => {
+  document.querySelectorAll('[data-delete]').forEach(Xbutton => {
+    Xbutton.addEventListener('click', async () => {
       if (window.confirm('Are you sure you want to delete this application?')) {
-        await deleteApplication(button.dataset.id);
+        await deleteApplication(Xbutton.dataset.id);
         await render();
       }
+    }); 
+  });
+
+  document.querySelectorAll('[data-id]').forEach(Status_span => {
+    Status_span.addEventListener('click', async () => {
+      const span = Status_span;
+      const select = document.createElement('select');
+      select.style.width = 'auto';
+
+      ['applied', 'interview', 'offer', 'rejected'].forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        if (option === span.dataset.status) opt.selected = true;
+        select.appendChild(opt);
+      });
+
+      select.dataset.id = span.dataset.id;
+      span.replaceWith(select);
+
+      select.addEventListener('change', async () => {
+        await updateApplication(select.dataset.id, { status: select.value });
+        await render();
+      });
     });
   });
 }
