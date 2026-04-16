@@ -74,23 +74,16 @@ export async function Applications() {
 }
 
 // ===== events =====
-document.addEventListener("click", async (e) => {
-  // handle filter button clicks via data-filter attribute
-  if (!e.target.dataset.filter) return;
-  activeFilter = e.target.dataset.filter;
-  const applications = await getApplications();
-  const applicationsFiltered = filterApplications(applications, activeFilter);
-
-  document.getElementById("applications-list").innerHTML = renderApplications(applicationsFiltered);
-
-  // update filter buttons styles based on the active filter
-  document.querySelectorAll("[data-filter]").forEach(btn => {
-    if (btn.dataset.filter === activeFilter) {
-      btn.classList.add(...activeBtnClasses.split(" "));
-      btn.classList.remove(...inactiveBtnClasses.split(" "));
-    } else {
-      btn.classList.remove(...activeBtnClasses.split(" "));
-      btn.classList.add(...inactiveBtnClasses.split(" "));
-    }
+export function setupApplicationFilters(onFilterChange) {
+  // get all filter buttons via data-filter attribute
+  const buttons = document.querySelectorAll('[data-filter]');
+  
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.filter;
+      
+      // trigger UI re-render via callback
+      onFilterChange();
+    });
   });
-});
+}
