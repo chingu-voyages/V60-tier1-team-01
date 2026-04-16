@@ -6,6 +6,28 @@ export function AddApplication() {
   setTimeout(() => {
     const form = document.getElementById('applicationForm');
 
+    // Restore draft if one exists
+    const draft = localStorage.getItem('form_draft');
+    if (draft) {
+      const data = JSON.parse(draft);
+      document.getElementById('company').value = data.company || '';
+      document.getElementById('role').value = data.role || '';
+      document.getElementById('date').value = data.date || '';
+      document.getElementById('location').value = data.location || '';
+      document.getElementById('status').value = data.status || '';
+    }
+
+    // Save draft on every input change
+    form.addEventListener('input', () => {
+      localStorage.setItem('form_draft', JSON.stringify({
+        company: document.getElementById('company').value,
+        role: document.getElementById('role').value,
+        date: document.getElementById('date').value,
+        location: document.getElementById('location').value,
+        status: document.getElementById('status').value,
+      }));
+    });
+
     form.addEventListener("submit", async (e)=>{
       e.preventDefault();
 
@@ -74,6 +96,7 @@ export function AddApplication() {
           location: location.value,
           status: status.value,
         });
+        localStorage.removeItem('form_draft');
         alert(" Application added successfully!");
         form.reset();
       }
