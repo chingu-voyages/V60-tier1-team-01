@@ -6,6 +6,7 @@ import { AddApplication } from './pages/AddApplication/AddApplication.js';
 import { Applications } from './pages/Applications/Applications.js';
 import { deleteApplication } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
+import { initDashboard } from './pages/Dashboard/DashboardInit.js';
 
 //url navigation
 const routes = {
@@ -24,6 +25,9 @@ async function render() {
     ${page ? await page() : '<p>Page not found</p>'}
     ${Footer()}
   `;
+  if (hash === 'dashboard') {
+    await initDashboard();
+  }
 
   document.querySelectorAll('[data-id]').forEach(button => {
     button.addEventListener('click', async () => {
