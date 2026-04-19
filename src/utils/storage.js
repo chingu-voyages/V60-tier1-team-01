@@ -6,6 +6,10 @@ const STORAGE_KEY = 'job_applications'
 
 let getApplications, saveApplication, updateApplication, deleteApplication;
 
+// if/else branch for using Supabase database 
+// if the .env attributes are present and functioning correctly 
+// and the system is online. otherwise fallback to localStorage (browser). 
+// This enables testing and development even without a connection to the database
 if (useSupabase) {
 
   getApplications = async () => {
@@ -42,7 +46,7 @@ if (useSupabase) {
     if (error) throw error;
   }
 
-} else {
+} else { // fallback to localStorage if supabase fails
 
   getApplications = () => {
     const data = localStorage.getItem(STORAGE_KEY)

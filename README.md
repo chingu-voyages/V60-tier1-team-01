@@ -1,3 +1,15 @@
+# Project Overview
+
+Jobify is an Application management system for busy job seekers to organize and track their job applications all in one place. Allowing the user to enter as many applications as they need, sort and filter them, and view analytics and metrics in a visual dashboard. 
+
+## Stack
+
+- Vite
+- Tailwind CSS
+- Vanilla JS
+- Supabase
+
+
 ## Installation
 
 ```bash
@@ -11,39 +23,15 @@ npm ci
 #run dev server
 npm run dev
 ```
+You will need an `.env` file configured with the parameters outlined in `.env.example` for the database to connect to Supabase. 
 
-<details>
-<summary>Click to view voyage tasks</summary>
+## Branch/PR Workflow
 
-# voyage-tasks
+- Branch off the `development` branch and title branches using category prefixes (eg. `feature/branch`, `bugfix/branch`, `docs/branch`)
 
-Your project's `readme` is as important to success as your code. For 
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+## Deployments
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point - 
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
-
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
-
-> Own it & Make it your Own!
-
-## Team Documents
-
-You may find these helpful as you work together to organize your project.
-
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
-
-Meeting Agenda templates (located in the `/docs` directory in this repo):
-
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
-</details>
+- [Production](https://v60-tier1-team-01.vercel.app/)
 
 ## Our Team
 
