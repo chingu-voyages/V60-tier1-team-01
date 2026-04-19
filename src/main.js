@@ -69,5 +69,5 @@ async function render() {
   });
 }
 
-window.addEventListener('hashchange', render);
+window.addEventListener('hashchange', render); // re-renders page content and re-attaches event listeners on every navigation
 render();

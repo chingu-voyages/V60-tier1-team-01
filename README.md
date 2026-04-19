@@ -1,3 +1,15 @@
+# Project Overview
+
+Jobify is an application management system for busy job seekers to organize and track their job applications all in one place. Allowing the user to enter as many applications as they need, sort and filter them, and view analytics and metrics in a visual dashboard. 
+
+## Stack
+
+- Vite
+- Tailwind CSS
+- Vanilla JS
+- Supabase
+
+
 ## Installation
 
 ```bash
@@ -12,38 +24,22 @@ npm ci
 npm run dev
 ```
 
-<details>
-<summary>Click to view voyage tasks</summary>
+### Database configuration
 
-# voyage-tasks
+You will need an `.env` file configured with the parameters outlined in `.env.example` for the database to connect to Supabase. 
 
-Your project's `readme` is as important to success as your code. For 
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+Without an `.env` file, the app falls back to localStorage automatically, so you can develop and test without a Supabase connection.
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point - 
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+## Branch/PR Workflow
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+- Branch off the `development` branch and title branches using category prefixes (eg. `feature/branch`, `bugfix/branch`, `docs/branch`)
+- PRs automatically compare to `development` as the default branch
+- `development` gets merged into `main` at the end of each sprint
 
-> Own it & Make it your Own!
+## Deployments
 
-## Team Documents
-
-You may find these helpful as you work together to organize your project.
-
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
-
-Meeting Agenda templates (located in the `/docs` directory in this repo):
-
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
-</details>
+- [Production](https://v60-tier1-team-01.vercel.app/)
+- [Development](https://github.com/chingu-voyages/V60-tier1-team-01/deployments/Preview)
 
 ## Our Team
 
@@ -52,4 +48,4 @@ Meeting Agenda templates (located in the `/docs` directory in this repo):
 - Zien Alhawshi: [GitHub](https://github.com/Zien-Alhawshi) / [LinkedIn](https://www.linkedin.com/in/zien-alhawshi-a5235a25b/)
 - Gabriele Zenobi: [GitHub](https://github.com/GabrieleRepo) / [LinkedIn](https://linkedin.com/in/gabriele-zenobi)
 - Priscilla Anim: [GitHub](https://github.com/priscilla-anim) / [LinkedIn](https://linkedin.com/in/priscilla-koramah-anim)
-- Martin Karimi  : [GitHub](https://github.com/buzzcodier) / [LinkedIn](www.linkedin.com/in/martin-rubi-92b51a400)
+- Martin Karimi  : [GitHub](https://github.com/buzzcodier) / [LinkedIn](https://www.linkedin.com/in/martin-rubi-92b51a400)
