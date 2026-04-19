@@ -3,7 +3,7 @@ import { saveApplication } from '../../utils/storage.js';
 
 
 export function AddApplication() {
-  setTimeout(() => {
+  setTimeout(() => { // defers the execution until the stack finishes and the DOM is updated
     const form = document.getElementById('applicationForm');
 
     // Restore draft if one exists
