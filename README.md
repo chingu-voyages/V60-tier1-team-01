@@ -39,6 +39,7 @@ Without an `.env` file, the app falls back to localStorage automatically, so you
 ## Deployments
 
 - [Production](https://v60-tier1-team-01.vercel.app/)
+- [Development](https://github.com/chingu-voyages/V60-tier1-team-01/deployments/Preview)
 
 ## Our Team
 
