@@ -6,10 +6,14 @@ const STORAGE_KEY = 'job_applications'
 
 let getApplications, saveApplication, updateApplication, deleteApplication;
 
+// if/else branch for using Supabase database 
+// if the .env attributes are present and functioning correctly 
+// and the system is online. otherwise fallback to localStorage (browser). 
+// This enables testing and development even without a connection to the database
 if (useSupabase) {
 
   getApplications = async () => {
-    const { data, error } = await supabase.from('applications').select('*');
+    const { data, error } = await supabase.from('applications').select('*').order('id');
     if (error) throw error;
     return data;
   }
@@ -21,6 +25,17 @@ if (useSupabase) {
   }
 
   updateApplication = async (id, data) => {
+    const { data: current, error: fetchError } = await supabase.from('applications').select('status').eq('id', id).single();
+    if (fetchError) throw fetchError;
+
+    if (data.status && data.status !== current.status) {
+      await supabase.from('status_history').insert([{
+        application_id: id,
+        status: data.status,
+        changed_at: new Date().toISOString()
+      }]);
+    }
+
     const { data: updated, error } = await supabase.from('applications').update(data).eq('id', id).select().single();
     if (error) throw error;
     return updated;
@@ -31,7 +46,7 @@ if (useSupabase) {
     if (error) throw error;
   }
 
-} else {
+} else { // fallback to localStorage if supabase fails
 
   getApplications = () => {
     const data = localStorage.getItem(STORAGE_KEY)
@@ -55,11 +70,19 @@ if (useSupabase) {
     const applications = getApplications()
     const index = applications.findIndex(app => app.id === id)
     if (index === -1) return null
-    applications[index] = {
-      ...applications[index],
-      ...data,
-      updatedAt: new Date().toISOString()
+
+    if (data.status && data.status !== applications[index].status) {
+      const history = JSON.parse(localStorage.getItem('status_history') || '[]')
+      history.push({
+        id: crypto.randomUUID(),
+        application_id: id,
+        status: data.status,
+        changed_at: new Date().toISOString()
+      })
+      localStorage.setItem('status_history', JSON.stringify(history))
     }
+
+    applications[index] = { ...applications[index], ...data, updatedAt: new Date().toISOString() }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(applications))
     return applications[index]
   }

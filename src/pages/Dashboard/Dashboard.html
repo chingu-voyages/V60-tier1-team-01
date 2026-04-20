@@ -1,5 +1,131 @@
 <section class="pt-20">
-    <h2>
-        Dashboard
-    </h2>
+
+
+
+
+     <div id="main-container" class="flex flex-col  justify-between gap-10">
+
+          <div id=main-dash class="flex flex-row items-center justify-between  bg-red-100 p-0">
+               <div id="applications-container" class="m-0  p-0">
+
+                    <div class="flex flex-col  items-center justify-center p-20">
+                         <h2 class="p-1 font-bold text-4xl">TOTAL APPLICATIONS </h2>
+                         <p id="totalapps" class="text-5xl font-bold p-20"> </p>
+                    </div>
+
+               </div>
+
+               <div id="piechart" class=" flex flex-col flex-1 items-center bg-blue-300">
+
+                    <div id="chart" class="p-2 flex-1 w-fit h-fit">
+                         <canvas id="myChart"></canvas>
+
+                    </div>
+
+                    <div id="stats" class="flex flex-row items-center justify-around">
+                         <div class="flex flex-row items-center justify-center">
+                              <h2 class="p-10">Applied </h2>
+                              <p id="totalApplied" class="text-2xl font-bold p-4"> </p>
+
+
+                         </div>
+
+                         <div class="flex flex-row items-center justify-center">
+                              <h2 class="p-10">total interviews </h2>
+                              <p id="totalInterview" class="text-2xl font-bold p-4"> </p>
+
+
+                         </div>
+
+                         <div class="flex flex-row items-center justify-center">
+                              <h2 class="p-10">total Offer </h2>
+                              <p id="totalOffer" class="text-2xl font-bold p-4"> </p>
+
+
+                         </div>
+                         <div class="flex flex-row items-center justify-center">
+                              <h2 class="p-10">total Rejected </h2>
+                              <p id="totalRejected" class="text-2xl font-bold p-4"> </p>
+
+
+                         </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+               </div>
+
+          </div>
+
+
+          <div id="recent-entry" class="bg-white rounded-xl shadow p-15">
+               <h2 class="text-lg font-semibold mb-4 text-center">
+                    Recent Entry
+               </h2>
+               <div id="latest-entry" class="space-y-2 text-sm ">
+                    <div class="flex justify-between">
+                         <span class="text-gray-500">Company</span>
+                         <span id="company" class="font-medium">-</span>
+
+                    </div>
+                    <div class="flex justify-between">
+                         <span class="text-gray-500">Role</span>
+                         <span id="role" class="font-medium">-</span>
+
+                    </div>
+                    <div class="flex justify-between">
+                         <span class="text-gray-500">Date</span>
+                         <span id="date" class="font-medium">-</span>
+
+                    </div>
+                    <div class="flex justify-between">
+                         <span class="text-gray-500">Status</span>
+                         <span id="status" class="font-medium">-</span>
+
+                    </div>
+                    <div class="flex justify-between">
+                         <span class="text-gray-500">Location</span>
+                         <span id="location" class="font-medium">-</span>
+
+                    </div>
+
+
+               </div>
+
+
+          </div>
+
+          <div id="response-rate" class="bg-yellow-100 p-15">
+               <h1>
+                    Response Rate
+
+               </h1>
+               <p id="responseRate" class="text-2xl font-bold p-4">coming soon </p>
+
+          </div>
+
+
+
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </section>
