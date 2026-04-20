@@ -7,6 +7,7 @@ import { Applications, setupApplicationFilters } from './pages/Applications/Appl
 import { deleteApplication, updateApplication } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
 import { initDashboard } from './pages/Dashboard/DashboardInit.js';
+import { supabase } from './utils/supabase.js';
 
 //url navigation
 const routes = {
@@ -71,3 +72,34 @@ async function render() {
 
 window.addEventListener('hashchange', render); // re-renders page content and re-attaches event listeners on every navigation
 render();
+
+// online/offline indicator
+function createConnectionIndicator() {
+  const indicator = document.createElement('div');
+  indicator.id = 'connection-indicator';
+  indicator.className = 'connection-indicator';
+  document.body.appendChild(indicator);
+  return indicator;
+}
+
+async function updateConnectionIndicator() {
+  let indicator = document.getElementById('connection-indicator');
+  if (!indicator) indicator = createConnectionIndicator();
+
+  if (!supabase) { // debugging branch for renaming the .env file
+    indicator.innerHTML = '<span class="connection-dot connection-dot--offline"></span>offline';
+    return;
+  }
+
+  try { // probe supabase for response, or default to offline
+    const { error } = await supabase.from('applications').select('id').limit(1);
+    if (error) throw error;
+    indicator.innerHTML = '<span class="connection-dot connection-dot--online"></span>online';
+  } catch {
+    indicator.innerHTML = '<span class="connection-dot connection-dot--offline"></span>offline';
+  }
+}
+
+createConnectionIndicator();
+updateConnectionIndicator();
+setInterval(updateConnectionIndicator, 30000);
