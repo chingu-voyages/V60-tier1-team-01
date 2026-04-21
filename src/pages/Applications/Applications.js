@@ -2,6 +2,7 @@ import { getApplications } from '../../utils/storage.js';
 
 // ===== state =====
 let activeFilter = "All";
+let viewMode = "cards";
 
 // ===== constants =====
 const filters = ["All", "Applied", "Interview", "Offer", "Rejected"];
@@ -58,6 +59,34 @@ export async function Applications() {
       </div>
 
       <h1>Applications</h1>
+
+      <div class="flex justify-center mb-5">
+        <label class="inline-flex items-center cursor-pointer">
+          <span class="select-none text-sm font-medium text-heading">
+            Cards
+          </span>
+
+          <input 
+            type="checkbox" 
+            id="view-toggle" 
+            class="sr-only peer" 
+            ${viewMode === "table" ? "checked" : ""}
+          >
+
+          <div class="relative mx-3 w-9 h-5 bg-gray-400 rounded-full
+                      peer-checked:bg-green-900
+                      after:content-[''] after:absolute after:top-0.5 after:left-0.5
+                      after:bg-white after:rounded-full after:h-4 after:w-4
+                      after:transition-all
+                      peer-checked:after:translate-x-full">
+          </div>
+
+          <span class="select-none text-sm font-medium text-heading">
+            Table
+          </span>
+        </label>
+      </div>
+
       <div class="group flex items-center justify-between p-1 rounded mb-2">
         <span>Company</span>
         <span>Role</span>
@@ -77,6 +106,7 @@ export async function Applications() {
 export function setupApplicationFilters(onFilterChange) {
   // get all filter buttons via data-filter attribute
   const buttons = document.querySelectorAll('[data-filter]');
+  const toggle = document.getElementById("view-toggle");
   
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -85,5 +115,11 @@ export function setupApplicationFilters(onFilterChange) {
       // trigger UI re-render via callback
       onFilterChange();
     });
+  });
+
+  toggle.addEventListener("change", () => {
+    viewMode = toggle.checked ? "table" : "cards";
+    console.log(viewMode);
+    onFilterChange();
   });
 }
