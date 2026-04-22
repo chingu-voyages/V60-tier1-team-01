@@ -39,7 +39,7 @@ async function render() {
   document.querySelectorAll('[data-delete]').forEach(Xbutton => {
     Xbutton.addEventListener('click', async () => {
       if (window.confirm('Are you sure you want to delete this application?')) {
-        await deleteApplication(Xbutton.dataset.id);
+        await deleteApplication(Xbutton.dataset.delete);
         await render();
       }
     }); 
