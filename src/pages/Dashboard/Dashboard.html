@@ -1,149 +1,134 @@
-<section class="pt-20  bg-[radial-gradient(ellipse_at_top_left,#274C25,#000)]">
+<section class="min-h-screen  bg-[radial-gradient(ellipse_at_top_left,#274C25,#000)] text-white">
+
+     <div class="px-4 md:px-10 py-10">
 
 
+          <!--main grid-->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 border-blue-800">
 
 
-     <div id="main-container" class="flex flex-col  justify-between gap-10 bg-[radial-gradient(ellipse_at_top_left,#274C25,#000)]">
+               <!-- left side main dashboard-->
+               <div class="lg:col-span-2 flex flex-col gap-6">
+                    <!--top total ?chart-->
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <!--total applications chart-->
+                         <div class="flex-1  bg-white/5 backdrop-blur rounded-xl p-6 md:p-8 text-center">
+                              <h2 class="text-lg md:text-xl font-semibold mb-2 ">TOTAL APPLICATIONS</h2>
+                              <p id="totalapps" class="text-3xl md:text-5xl font-bold"></p>
+                         </div>
+                         <!--chart card-->
+                         <div
+                              class="flex-1 bg-white/5 backdrop-blur rounded-xl p-6 md:p-8 flex items-center justify-center">
+                              <div class="w-full max-w-xs md:max-w-sm">
+                                   <canvas id="myChart"></canvas>
 
-          <div id=main-dash class="text-white! flex flex-row items-center justify-between    p-0">
-               <div id="applications-container" class="m-0  p-0">
+                              </div>
+                         </div>
+                </div>
 
-                    <div class="flex flex-col  items-center justify-center p-20">
-                         <h2 class="text-white!  p-1 font-bold text-4xl">TOTAL APPLICATIONS </h2>
-                         <p id="totalapps" class="text-5xl font-bold p-20"> </p>
-                         
-                    </div>
+                         <!--stats-->
+                         <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
+                              <div class="bg-white/5 rounded-lg p-4 text-center">
+                                   <h2 class="text-sm md:text-base ">Applied</h2>
+                                   <p id="totalApplied" class="text-xl md:text-2xl font-bold"></p>
+
+                              </div>
+
+                              <div class="bg-white/5 rounded-lg p-4 text-center">
+                                   <h2 class="text-sm md:text-base ">Interviews</h2>
+                                   <p id="totalInterview" class="text-xl md:text-2xl font-bold"></p>
+
+                              </div>
+
+                              <div class="bg-white/5 rounded-lg p-4 text-center">
+                                   <h2 class="text-sm md:text-base ">Offers</h2>
+                                   <p id="totalOffer" class="text-xl md:text-2xl font-bold"></p>
+
+                              </div>
+
+                              <div class="bg-white/5 rounded-lg p-4 text-center">
+                                   <h2 class="text-sm md:text-base ">Rejected</h2>
+                                   <p id="totalRejected" class="text-xl md:text-2xl font-bold"></p>
+
+                              </div>
+
+                         </div>
                </div>
+                    <!-- right side -->
+                    <div class="flex flex-col gap-6">
+                         <!--recent applications-->
+                         <div class="bg-white/5 backdrop-blur rounded-xl p-6 md:p-8">
+                              <h2 class="text-lg font-semibold mb-4 text-center">Recent Entry</h2>
 
-               <div id="piechart" class="text-white! flex flex-col flex-1 items-center ">
+                              <div id="latest-entry" class="space-y-3 text-sm">
 
-                    <div id="chart" class="p-2 flex-1 w-fit h-fit">
-                         <canvas id="myChart"></canvas>
+                                   <div class="flex justify-between">
+                                        <span>Company</span>
+                                        <span id="company" class="font-medium">-</span>
 
+                                   </div>
+
+                                   <div class="flex justify-between">
+                                        <span>Role</span>
+                                        <span id="role" class="font-medium">-</span>
+
+                                   </div>
+
+                                   <div class="flex justify-between">
+                                        <span>Date</span>
+                                        <span id="date" class="font-medium">-</span>
+
+                                   </div>
+
+                                   <div class="flex justify-between">
+                                        <span>Status</span>
+                                        <span id="status" class="font-medium">-</span>
+
+                                   </div>
+
+                                   <div class="flex justify-between">
+                                        <span>location</span>
+                                        <span id="location" class="font-medium">-</span>
+
+                                   </div>
+
+                              </div>
+
+                         </div>
+                         <!--response rate-->
+                         <div class="bg-white/5 backdrop-blur rounded-xl p-6 md:p-8 text-center">
+
+                          <h2 class="text-lg font-semibold mb-4">
+                                   Response Rate
+                              </h2>
+                              <div class="grid grid-cols-1 gap-4">
+                                   <div>
+                                        <h3 class="text-sm">Interview Rate</h3>
+                                        <span id="interviewRate" class="text-2xl font-bold"></span>
+                                   </div>
+                                   <div>
+                                        <h3 class="text-sm">Offer Rate</h3>
+                                        <span id="offerRate" class="text-2xl font-bold"></span>
+                                   </div>
+                                   <div>
+                                        <h3 class="text-sm">Response Rate</h3>
+                                        <span id="responseRate" class="text-2xl font-bold"></span>
+                                   </div>
+
+
+
+                              </div>
+
+                         </div>
                     </div>
 
-                    <div id="stats" class=" flex flex-row items-center justify-around">
-                         <div class=" flex flex-row items-center justify-center">
-                              <h2 class="text-white! p-10">Applied </h2>
-                              <p id="totalApplied" class="text-2xl font-bold p-4"> </p>
+               
 
-
-                         </div>
-
-                         <div class="flex flex-row items-center justify-center">
-                              <h2 class="text-white! p-10">total interviews </h2>
-                              <p id="totalInterview" class="text-2xl font-bold p-4"> </p>
-
-
-                         </div>
-
-                         <div class="flex flex-row items-center justify-center">
-                              <h2 class="text-white! p-10">total Offer </h2>
-                              <p id="totalOffer" class="text-2xl font-bold p-4"> </p>
-
-
-                         </div>
-                         <div class="flex flex-row items-center justify-center">
-                              <h2 class="text-white! p-10">total Rejected </h2>
-                              <p id="totalRejected" class="text-2xl font-bold p-4"> </p>
-
-
-                         </div>
-
-
-
-
-
-
-                    </div>
-
-
-
-               </div>
 
           </div>
-
-
-          <div id="recent-entry" class="text-white!  rounded-xl shadow p-15">
-               <h2 class="text-white! text-lg font-semibold mb-4 text-center">
-                    Recent Entry
-               </h2>
-               <div id="latest-entry" class="space-y-2 text-sm ">
-                    <div class="flex justify-between">
-                         <span >Company</span>
-                         <span id="company" class="font-medium">-</span>
-
-                    </div>
-                    <div class="flex justify-between">
-                         <span >Role</span>
-                         <span id="role" class="font-medium">-</span>
-
-                    </div>
-                    <div class="flex justify-between">
-                         <span >Date</span>
-                         <span id="date" class="font-medium">-</span>
-
-                    </div>
-                    <div class="flex justify-between">
-                         <span >Status</span>
-                         <span id="status" class="font-medium">-</span>
-
-                    </div>
-                    <div class="flex justify-between">
-                         <span >Location</span>
-                         <span id="location" class="font-medium">-</span>
-
-                    </div>
-
-
-               </div>
-
-
-          </div>
-
-          <div id="response-rate" class=" text-white  p-5 flex flex-col items-center justify-between ">
-               <h1 class="text-white! text-center pt-0 pb-5 ">
-                    Response Rate
-
-               </h1>
-               <div id="responsestats" class="flex flex-row justify-between items-center gap-20 mt-2" >
-                    <div class="flex flex-col items-center gap-4">
-                         <h2 class="text-white!">
-                              Interview Rate
-                         </h2>
-                         <span id="interviewRate" class="text-3xl"></span>
-                    </div>
-                    <div class="flex flex-col items-center gap-4">
-                         <h2 class="text-white!">
-                              Offer Rate
-                         </h2>
-                         <span id="offerRate" class="text-3xl"></span>
-                    </div>
-                    <div class="flex flex-col items-center gap-4">
-                         <h2 class="text-white!">
-                              Response Rate
-                         </h2>
-                         <span id="responseRate" class="text-3xl"></span>
-                    </div>
-
-               </div>
-
-          </div>
-
-
 
      </div>
-
-
-
-
-
-
-
-
-
-
 
 
 
