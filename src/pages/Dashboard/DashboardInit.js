@@ -12,6 +12,8 @@ export async function initDashboard() {
   renderChart(stats);
   renderRates(stats);
   renderConversionRates(stats, status_history);
+  renderAverageResponseRate(stats, applications, status_history);
+  
   
   renderLatestEntry(applications);
 }
@@ -72,6 +74,26 @@ function renderConversionRates(stats, status_history) {
   document.getElementById('interviewToOfferRate').textContent = `${interviewToOfferRate}%`;
 }
 
+
+function renderAverageResponseRate(stats, applications, status_history) {
+  const responseTimes = [];
+  for (const app of applications) {
+    const appliedDate = new Date(app.created_at);
+    const historyRows = status_history.filter(r => r.application_id === app.id)
+    if (historyRows.length ===0)
+      continue;
+    const firstUpdate = Math.min(...historyRows.map(r => new Date(r.changed_at)));
+
+    
+    let diff = Math.round((firstUpdate - appliedDate) / (1000 * 60 * 60 * 24));
+    responseTimes.push(diff);
+  }
+
+
+  const averageResponseRate = (responseTimes.reduce((a,b) => a + b, 0) / responseTimes.length);
+  document.getElementById('averageResponseRate').textContent = `${averageResponseRate} days`;
+
+}
 
 
 
