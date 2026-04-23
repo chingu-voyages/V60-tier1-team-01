@@ -1,8 +1,9 @@
 import Chart from 'chart.js/auto';
-import { getApplications } from '../../utils/storage.js';
+import { getApplications, getStatusHistory } from '../../utils/storage.js';
 
 export async function initDashboard() {
   const applications = await getApplications();
+  const status_history = await getStatusHistory();
   
   // 1. Get the calculated stats
   const stats = renderMetrics(applications);
@@ -10,6 +11,7 @@ export async function initDashboard() {
   // 2. Pass those stats to the chart renderer
   renderChart(stats);
   renderRates(stats);
+  renderConversionRates(stats, status_history);
   
   renderLatestEntry(applications);
 }
@@ -57,8 +59,18 @@ function renderRates(stats) {
 }
 
 
+function renderConversionRates(stats, status_history) {
+  const interviewedIds = new Set(status_history.filter(r => r.status === 'interview').map(r => r.application_id));
+  const offeredIds = new Set(status_history.filter(r => r.status === 'offer').map(r => r.application_id));
 
+  const appliedToInterviewRate = stats.total === 0 ? 0 :
+    (interviewedIds.size / stats.total * 100).toFixed(2);
+  const interviewToOfferRate = interviewedIds.size === 0 ? 0 :
+    (offeredIds.size / interviewedIds.size * 100).toFixed(2);
 
+  document.getElementById('appliedToInterviewRate').textContent = `${appliedToInterviewRate}%`;
+  document.getElementById('interviewToOfferRate').textContent = `${interviewToOfferRate}%`;
+}
 
 
 
