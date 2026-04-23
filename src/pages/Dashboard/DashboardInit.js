@@ -62,11 +62,15 @@ function renderRates(stats) {
 
 
 function renderConversionRates(stats, status_history) {
+  // make sets of applications in only interview or offer status
   const interviewedIds = new Set(status_history.filter(r => r.status === 'interview').map(r => r.application_id));
   const offeredIds = new Set(status_history.filter(r => r.status === 'offer').map(r => r.application_id));
 
+  // percentage of applications that went from applied to interview status
   const appliedToInterviewRate = stats.total === 0 ? 0 :
     (interviewedIds.size / stats.total * 100).toFixed(2);
+
+  // percentage of applications that went from interview to offer status
   const interviewToOfferRate = interviewedIds.size === 0 ? 0 :
     (offeredIds.size / interviewedIds.size * 100).toFixed(2);
 
@@ -80,12 +84,12 @@ function renderAverageResponseRate(stats, applications, status_history) {
   for (const app of applications) {
     const appliedDate = new Date(app.created_at);
     const historyRows = status_history.filter(r => r.application_id === app.id)
-    if (historyRows.length ===0)
+    if (historyRows.length === 0)
       continue;
     const firstUpdate = Math.min(...historyRows.map(r => new Date(r.changed_at)));
 
     
-    let diff = Math.round((firstUpdate - appliedDate) / (1000 * 60 * 60 * 24));
+    let diff = Math.round((firstUpdate - appliedDate) / (1000 * 60 * 60 * 24)); // convert difference in seconds to days
     responseTimes.push(diff);
   }
 
