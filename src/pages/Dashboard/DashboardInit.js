@@ -9,6 +9,7 @@ export async function initDashboard() {
   
   // 2. Pass those stats to the chart renderer
   renderChart(stats);
+  renderRates(stats);
   
   renderLatestEntry(applications);
 }
@@ -41,6 +42,26 @@ function renderChart(stats) {
     }
   });
 }
+
+function renderRates(stats) {
+  const interviewRate =  stats.total ===  0 ? 0 : 
+    (stats.interview / stats.total * 100).toFixed(2);
+  const offerRate = stats.total === 0 ? 0 : 
+    (stats.offer / stats.total * 100).toFixed(2);
+  const responseRate = stats.total === 0 ? 0 : 
+    ((stats.interview + stats.offer) / stats.total * 100).toFixed(2);
+  
+  document.getElementById('interviewRate').textContent = `${interviewRate}%`;
+  document.getElementById('offerRate').textContent = `${offerRate}%`;
+  document.getElementById('responseRate').textContent = `${responseRate}%`;
+}
+
+
+
+
+
+
+
 
 function renderMetrics(applications) {
   const stats = {
