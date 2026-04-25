@@ -3,7 +3,9 @@ import { saveApplication } from '../../utils/storage.js';
 
 
 export function AddApplication() {
-  setTimeout(() => { // defers the execution until the stack finishes and the DOM is updated
+  // TODO: replace setTimeout with document.createElement so JS and HTML are created
+  // together and listeners can attach without a timing hack
+  setTimeout(() => {
     const form = document.getElementById('applicationForm');
 
     // Restore draft if one exists
