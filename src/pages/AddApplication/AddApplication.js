@@ -3,9 +3,9 @@ import { saveApplication } from '../../utils/storage.js';
 
 
 export function AddApplication() {
-  // TODO: replace setTimeout with document.createElement so JS and HTML are created
-  // together and listeners can attach without a timing hack
-  setTimeout(() => {
+
+  return {html: template, init: () => {
+    
     const form = document.getElementById('applicationForm');
 
     // Restore draft if one exists
@@ -14,10 +14,15 @@ export function AddApplication() {
       const data = JSON.parse(draft);
       document.getElementById('company').value = data.company || '';
       document.getElementById('role').value = data.role || '';
-      document.getElementById('date').value = data.date || '';
+      document.getElementById('date').value = data.date || new Date().toISOString().split('T')[0];
       document.getElementById('location').value = data.location || '';
       document.getElementById('status').value = data.status || '';
-    }
+      document.getElementById('notes').value = data.notes || '';
+    } 
+
+    document.getElementById('date').value = document.getElementById('date').value || new Date().toISOString().split('T')[0]; // defaults to today to avoid failing field validation
+
+
 
     // Save draft on every input change
     form.addEventListener('input', () => {
@@ -27,6 +32,7 @@ export function AddApplication() {
         date: document.getElementById('date').value,
         location: document.getElementById('location').value,
         status: document.getElementById('status').value,
+        notes: document.getElementById('notes').value,
       }));
     });
 
@@ -38,6 +44,7 @@ export function AddApplication() {
       const date = document.getElementById('date');
       const location = document.getElementById('location');
       const status = document.getElementById('status');
+      const notes = document.getElementById('notes');
 
       let isValid = true;
 
@@ -97,6 +104,7 @@ export function AddApplication() {
           date: date.value,
           location: location.value,
           status: status.value,
+          notes: notes.value,
         });
         localStorage.removeItem('form_draft');
         alert(" Application added successfully!");
@@ -110,8 +118,6 @@ export function AddApplication() {
     }
 
     )
-  }, 0);
-
-
-  return template;
+  
+  }};
 }

@@ -20,11 +20,15 @@ const routes = {
 async function render() {
   const hash = window.location.hash.slice(1) || '';
   const page = routes[hash];
+  const result = page ? await page() : '<p>Page not found</p>';
+  const html = typeof result === 'object' ? result.html : result;
   document.getElementById('app').innerHTML = `
-    ${Header()}
-    ${page ? await page() : '<p>Page not found</p>'}
-    ${Footer()}
+  ${Header()}
+  ${html}
+  ${Footer()}
   `;
+  if (result.init) result.init();
+
   if (hash === 'dashboard') {
     await initDashboard();
   }
