@@ -51,40 +51,72 @@ export function AddApplication() {
         errorElement.textContent = "";
         input.style.border = "";
       }
+      [company, role, date, location, status].forEach(input => {
+  input.addEventListener('input', () => clearError(input));
+});
 
-        // Validation logic
-      if(company.value.trim() === ""){
-        showError(company,"Company name is required");
-        isValid =false;
-      }else {
-        clearError(company);
-      } 
-      if(role.value.trim() === ""){
-        showError(role,"Role is required");
-        isValid =false;
-      }else {
-        clearError(role);
-      } 
 
-      if(date.value.trim() === ""){
-        showError(date,"Date is required");
-        isValid =false;
-      }else {
-        clearError(date);
+const notes = document.getElementById('notes');
 
-      } 
-      if(location.value.trim() === ""){
-        showError(location,"Location is required");
-        isValid =false;
-      }else {
-        clearError(location);
-      } 
-      if(status.value.trim() === ""){
-        showError(status,"Status is required");
-        isValid =false;
-      }else {
-        clearError(status);
-      } 
+// Validation logic
+if (company.value.trim() === "") {
+  showError(company, "Company name is required");
+  isValid = false;
+} else if (!/^[a-zA-Z\s\-&.,']+$/.test(company.value.trim())) {
+  showError(company, "Company name contains invalid characters");
+  isValid = false;
+} else {
+  clearError(company);
+}
+
+if (role.value.trim() === "") {
+  showError(role, "Role is required");
+  isValid = false;
+} else if (!/^[a-zA-Z\s\-&.,']+$/.test(role.value.trim())) {
+  showError(role, "Role contains invalid characters");
+  isValid = false;
+} else {
+  clearError(role);
+}
+
+if (date.value.trim() === "") {
+  showError(date, "Date is required");
+  isValid = false;
+} else {
+  const selectedDate = new Date(date.value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (selectedDate > today) {
+    showError(date, "Date applied can't be in the future");
+    isValid = false;
+  } else {
+    clearError(date);
+  }
+}
+
+if (location.value.trim() === "") {
+  showError(location, "Location is required");
+  isValid = false;
+} else if (!/^[a-zA-Z\s\-&.,']+$/.test(location.value.trim())) {
+  showError(location, "Location contains invalid characters");
+  isValid = false;
+} else {
+  clearError(location);
+}
+
+if (status.value.trim() === "") {
+  showError(status, "Status is required");
+  isValid = false;
+} else {
+  clearError(status);
+}
+
+if (notes.value.length > 500) {
+  showError(notes, "Notes must be under 500 characters");
+  isValid = false;
+} else {
+  clearError(notes);
+}
 
       // If all fields are valid, show success message and reset form
 
