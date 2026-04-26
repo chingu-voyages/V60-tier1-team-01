@@ -16,6 +16,47 @@ const routes = {
   'dashboard': Dashboard,
 };
 
+//parent event listeners
+async function eventListener() {
+  
+  document.getElementById('app').addEventListener('click', async (e) => {
+    if (e.target.closest('[data-delete]')) {
+      // handle delete
+      if (window.confirm('Are you sure you want to delete this application?')) {
+        await deleteApplication(e.target.closest('[data-delete]').dataset.delete);
+        await render();
+      }; 
+    }
+    if (e.target.closest('[data-id]')) {
+      // handle status
+      const span = e.target.closest('[data-id]');
+      const select = document.createElement('select');
+      select.style.width = 'auto';
+
+      ['applied', 'interview', 'offer', 'rejected'].forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        if (option === span.dataset.status) opt.selected = true;
+        select.appendChild(opt);
+      });
+
+      select.dataset.id = span.dataset.id;
+      span.replaceWith(select);
+
+      select.addEventListener('change', async () => {
+        await updateApplication(select.dataset.id, { status: select.value });
+        await render();
+      });
+    }
+  });
+
+
+
+
+ 
+}
+
 //page renderer for dynamic loading
 async function render() {
   const hash = window.location.hash.slice(1) || '';
@@ -39,41 +80,9 @@ async function render() {
     setupApplicationFilters(render);
   }
 
-  // TODO: replace per-element listeners below with a single delegated listener on #app
-  // to avoid re-attaching on every render
-  document.querySelectorAll('[data-delete]').forEach(Xbutton => {
-    Xbutton.addEventListener('click', async () => {
-      if (window.confirm('Are you sure you want to delete this application?')) {
-        await deleteApplication(Xbutton.dataset.id);
-        await render();
-      }
-    }); 
-  });
-
-  document.querySelectorAll('[data-id]').forEach(Status_span => {
-    Status_span.addEventListener('click', async () => {
-      const span = Status_span;
-      const select = document.createElement('select');
-      select.style.width = 'auto';
-
-      ['applied', 'interview', 'offer', 'rejected'].forEach(option => {
-        const opt = document.createElement('option');
-        opt.value = option;
-        opt.textContent = option;
-        if (option === span.dataset.status) opt.selected = true;
-        select.appendChild(opt);
-      });
-
-      select.dataset.id = span.dataset.id;
-      span.replaceWith(select);
-
-      select.addEventListener('change', async () => {
-        await updateApplication(select.dataset.id, { status: select.value });
-        await render();
-      });
-    });
-  });
+ 
 }
 
 window.addEventListener('hashchange', render);
 render();
+eventListener();
