@@ -4,7 +4,7 @@ import { supabase } from './supabase.js';
 const useSupabase = !!import.meta.env.VITE_SUPABASE_URL;
 const STORAGE_KEY = 'job_applications'
 
-let getApplications, saveApplication, updateApplication, deleteApplication;
+let getApplications, saveApplication, updateApplication, deleteApplication, getStatusHistory;
 
 // if/else branch for using Supabase database 
 // if the .env attributes are present and functioning correctly 
@@ -44,6 +44,13 @@ if (useSupabase) {
   deleteApplication = async (id) => {
     const { error } = await supabase.from('applications').delete().eq('id', id);
     if (error) throw error;
+  }
+
+  // status_history table functions
+  getStatusHistory = async () => {
+    const { data, error } = await supabase.from('status_history').select('*').order('id');
+    if (error) throw error;
+    return data;
   }
 
 } else { // fallback to localStorage if supabase fails
@@ -94,6 +101,10 @@ if (useSupabase) {
     return filtered
   }
 
+  getStatusHistory = () => {
+    return JSON.parse(localStorage.getItem('status_history') || '[]')
+  }
+
 }
 
-export { getApplications, saveApplication, updateApplication, deleteApplication };
+export { getApplications, saveApplication, updateApplication, deleteApplication, getStatusHistory };

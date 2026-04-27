@@ -1,14 +1,19 @@
 import Chart from 'chart.js/auto';
-import { getApplications } from '../../utils/storage.js';
+import { getApplications, getStatusHistory } from '../../utils/storage.js';
 
 export async function initDashboard() {
   const applications = await getApplications();
+  const status_history = await getStatusHistory();
   
   // 1. Get the calculated stats
   const stats = renderMetrics(applications);
   
   // 2. Pass those stats to the chart renderer
   renderChart(stats);
+  renderRates(stats);
+  renderConversionRates(stats, status_history);
+  renderAverageResponseRate(stats, applications, status_history);
+  
   
   renderLatestEntry(applications);
 }
@@ -41,6 +46,60 @@ function renderChart(stats) {
     }
   });
 }
+
+function renderRates(stats) {
+  const interviewRate =  stats.total ===  0 ? 0 : 
+    (stats.interview / stats.total * 100).toFixed(2);
+  const offerRate = stats.total === 0 ? 0 : 
+    (stats.offer / stats.total * 100).toFixed(2);
+  const responseRate = stats.total === 0 ? 0 : 
+    ((stats.interview + stats.offer) / stats.total * 100).toFixed(2);
+  
+  document.getElementById('interviewRate').textContent = `${interviewRate}%`;
+  document.getElementById('offerRate').textContent = `${offerRate}%`;
+  document.getElementById('responseRate').textContent = `${responseRate}%`;
+}
+
+
+function renderConversionRates(stats, status_history) {
+  // make sets of applications in only interview or offer status
+  const interviewedIds = new Set(status_history.filter(r => r.status === 'interview').map(r => r.application_id));
+  const offeredIds = new Set(status_history.filter(r => r.status === 'offer').map(r => r.application_id));
+
+  // percentage of applications that went from applied to interview status
+  const appliedToInterviewRate = stats.total === 0 ? 0 :
+    (interviewedIds.size / stats.total * 100).toFixed(2);
+
+  // percentage of applications that went from interview to offer status
+  const interviewToOfferRate = interviewedIds.size === 0 ? 0 :
+    (offeredIds.size / interviewedIds.size * 100).toFixed(2);
+
+  document.getElementById('appliedToInterviewRate').textContent = `${appliedToInterviewRate}%`;
+  document.getElementById('interviewToOfferRate').textContent = `${interviewToOfferRate}%`;
+}
+
+
+function renderAverageResponseRate(stats, applications, status_history) {
+  const responseTimes = [];
+  for (const app of applications) {
+    const appliedDate = new Date(app.created_at);
+    const historyRows = status_history.filter(r => r.application_id === app.id)
+    if (historyRows.length === 0)
+      continue;
+    const firstUpdate = Math.min(...historyRows.map(r => new Date(r.changed_at)));
+
+    
+    let diff = Math.round((firstUpdate - appliedDate) / (1000 * 60 * 60 * 24)); // convert difference in seconds to days
+    responseTimes.push(diff);
+  }
+
+
+  const averageResponseRate = (responseTimes.reduce((a,b) => a + b, 0) / responseTimes.length);
+  document.getElementById('averageResponseRate').textContent = `${averageResponseRate} days`;
+
+}
+
+
 
 function renderMetrics(applications) {
   const stats = {
