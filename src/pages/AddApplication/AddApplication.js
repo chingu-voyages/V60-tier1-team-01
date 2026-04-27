@@ -65,7 +65,6 @@ export function AddApplication() {
 });
 
 
-const notes = document.getElementById('notes');
 
 // Validation logic
 if (company.value.trim() === "") {
