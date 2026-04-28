@@ -1,6 +1,6 @@
 export function renderApplications(applications) {
   return `
-    <div class="flex items-center justify-between p-1 rounded mb-2 font-bold">
+    <div class="card flex items-center justify-between p-4 mb-2 font-bold">
       <span>Company</span>
       <span>Role</span>
       <span>Status</span>
@@ -9,7 +9,7 @@ export function renderApplications(applications) {
     </div>
 
     ${applications.map(app => `
-      <div class="group flex items-center justify-between p-4 border rounded mb-2">
+      <div class="card group flex items-center justify-between p-3 mb-2">
         <span>${app.company}</span>
         <span>${app.role}</span>
         <span 
