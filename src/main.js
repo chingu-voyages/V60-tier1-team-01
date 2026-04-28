@@ -130,3 +130,21 @@ async function updateConnectionIndicator() {
 createConnectionIndicator();
 updateConnectionIndicator();
 setInterval(updateConnectionIndicator, 30000);
+
+// theme toggle button
+function createThemeToggle() {
+  const btn = document.createElement('button');
+  btn.id = 'theme-toggle';
+  btn.className = 'theme-toggle';
+  btn.innerHTML = '<img src="/src/assets/dark-mode.svg" alt="Toggle theme" width="20" height="20">';
+  document.body.appendChild(btn);
+
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+}
+
+createThemeToggle();

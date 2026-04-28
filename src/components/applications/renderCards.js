@@ -1,7 +1,7 @@
 // Renders job applications as a responsive grid of cards
 export function renderCards(applications) {
   return `
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
       ${applications.map(app => `
         <div class="card p-6 group flex flex-col mb-2">
           
