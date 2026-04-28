@@ -34,17 +34,25 @@ body {
   background-attachment: fixed;
 }
 
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --text: #1a181e;
+    --text-h: #0c0b0f;
+    --text-muted: #6b6375;
+    --border: rgba(39, 76, 37, 0.15);
+    --card-bg: rgba(39, 76, 37, 0.08);
+    --nav-hover-bg: rgba(39, 76, 37, 0.10);
+    --header-bg: rgba(255, 255, 255, 0.6);
+
+    body { background: radial-gradient(ellipse at top left, #a8d8a6, #fff) fixed; }
+  }
+}
+
 :root[data-theme="dark"] {
-  --text: #e5e7eb;
-  --text-h: #f3f4f6;
-  --text-muted: #9ca3af;
-  --border: rgba(255, 255, 255, 0.12);
-  --card-bg: rgba(255, 255, 255, 0.05);
   --nav-hover-bg: rgba(255, 255, 255, 0.10);
   --header-bg: transparent;
-}
-:root[data-theme="dark"] body {
-  background: radial-gradient(ellipse at top left, #274C25, #000) fixed;
+
+  body { background: radial-gradient(ellipse at top left, #274C25, #000) fixed; }
 }
 
 :root[data-theme="light"] {
@@ -55,9 +63,8 @@ body {
   --card-bg: rgba(39, 76, 37, 0.08);
   --nav-hover-bg: rgba(39, 76, 37, 0.10);
   --header-bg: rgba(255, 255, 255, 0.6);
-}
-:root[data-theme="light"] body {
-  background: radial-gradient(ellipse at top left, #a8d8a6, #fff) fixed;
+
+  body { background: radial-gradient(ellipse at top left, #a8d8a6, #fff) fixed; }
 }
 
 .header {
@@ -176,23 +183,29 @@ input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 999px;
-  border: none;
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
   padding: 0;
-  transition: opacity 0.2s;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255, 255, 255, 0.15); }
+  .toggle-icon-half { fill: rgba(255, 255, 255, 0.95); }
+  .toggle-icon-ring { fill: rgba(255, 255, 255, 0.4); }
 }
 
-.theme-toggle:hover {
-  opacity: 0.8;
-}
-
-.theme-toggle img {
-  filter: invert(1);
+:root[data-theme="light"] {
+  .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.06);
+    &:hover { background: rgba(0, 0, 0, 0.12); }
+    .toggle-icon-half { fill: rgba(0, 0, 0, 0.8); }
+    .toggle-icon-ring { fill: rgba(0, 0, 0, 0.3); }
+  }
 }
 
