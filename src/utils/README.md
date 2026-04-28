@@ -11,6 +11,7 @@ If `VITE_SUPABASE_URL` is present in `.env`, all functions use Supabase. If not,
 ### Functions
 
 - `getApplications()` - fetch all applications
+- `getStatusHistory()` - fetch all status change history records, used by the dashboard for conversion rate and response time metrics
 - `saveApplication(data)` - insert a new application
 - `updateApplication(id, data)` - update an existing application by ID. Also writes to `status_history` if the status changed.
 - `deleteApplication(id)` - delete an application by ID

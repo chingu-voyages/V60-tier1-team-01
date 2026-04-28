@@ -20,5 +20,5 @@ To add a new page:
 
 - **Home** - landing page with hero section and CTAs
 - **AddApplication** - form for submitting a new job application. Includes validation and draft persistence via localStorage.
-- **Applications** - lists all applications fetched from storage. Supports inline status updates and delete, as well as filter by status.
-- **Dashboard** - summary statistics and charts powered by Chart.js
+- **Applications** - lists all applications fetched from storage. Supports inline status updates, delete, filter by status, and a card/table view toggle.
+- **Dashboard** - summary statistics and charts powered by Chart.js. Includes total counts, interview/offer/response rates, conversion rates, average time to response, and a pie chart that updates with the active color theme.
