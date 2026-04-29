@@ -3,6 +3,7 @@ import { renderCards } from '../../components/applications/renderCards.js';
 import { renderApplications } from '../../components/applications/renderTable.js';
 import { renderFilterButtons } from '../../components/applications/renderStatusFilters.js';
 import { renderViewToggle } from '../../components/applications/renderViewToggle.js';
+import { openEditModal } from '../../components/applications/editModal.js';
 
 // ===== state =====
 let activeFilter = "All";
@@ -64,5 +65,23 @@ export function setupApplicationFilters(onFilterChange) {
     viewMode = toggle.checked ? "table" : "cards";
     console.log(viewMode);
     onFilterChange();
+  });
+
+  // handle edit click
+  document.addEventListener("click", async (e) => {
+    const editBtn = e.target.closest("[data-edit]");
+    if (!editBtn) return;
+
+    const id = editBtn.dataset.edit;
+    
+    // fetch all applications
+    const applications = await getApplications();
+    
+    // find specific app
+    const app = applications.find(a => String(a.id) === String(id));
+
+    if (app) {
+      openEditModal(app);
+    }
   });
 }
