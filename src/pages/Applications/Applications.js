@@ -42,6 +42,9 @@ export async function Applications() {
           : renderApplications(filteredApplications)
         }
       </div>
+
+      <!-- Modal Container -->
+      <div id="edit-modal" class="hidden"></div>
     </main>
   `;
 }
