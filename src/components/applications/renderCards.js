@@ -1,22 +1,22 @@
 // Renders job applications as a responsive grid of cards
 export function renderCards(applications) {
   return `
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
       ${applications.map(app => `
-        <div class="p-5 bg-white rounded-lg shadow-md">
+        <div class="card p-6 group flex flex-col mb-2">
           
           <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-500">${app.date}</span>
+            <span class="text-sm">${app.date}</span>
           </div>
 
           <div class="mt-3">
-            <h3 class="text-2xl font-bold text-gray-800 mb-3">
+            <h3 class="text-2xl font-bold  mb-3">
               ${app.company}
             </h3>
-            <p class="text-md text-gray-600">
+            <p class="text-md ">
               ${app.role}
             </p>
-            <p class="text-md text-gray-600">
+            <p class="text-md ">
               Status: 
               <span 
                 data-id="${app.id}" 

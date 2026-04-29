@@ -1,22 +1,23 @@
 @import "tailwindcss";
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&display=swap');
 
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
+  --text: #e5e7eb;
+  --text-h: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border: rgba(255, 255, 255, 0.12);
   --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-blur: blur(8px);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
   color: var(--text);
-  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,19 +28,68 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --text: #1a181e;
+    --text-h: #0c0b0f;
+    --text-muted: #6b6375;
+    --border: rgba(39, 76, 37, 0.15);
+    --card-bg: rgba(39, 76, 37, 0.08);
+    --nav-hover-bg: rgba(39, 76, 37, 0.10);
+    --header-bg: rgba(255, 255, 255, 0.6);
+
+    body { background: radial-gradient(ellipse at top left, #a8d8a6, #fff) fixed; }
   }
 }
 
-body {
-  margin: 0;
+:root[data-theme="dark"] {
+  --nav-hover-bg: rgba(255, 255, 255, 0.10);
+  --header-bg: transparent;
+
+  body { background: radial-gradient(ellipse at top left, #274C25, #000) fixed; }
+}
+
+:root[data-theme="light"] {
+  --text: #1a181e;
+  --text-h: #0c0b0f;
+  --text-muted: #6b6375;
+  --border: rgba(39, 76, 37, 0.15);
+  --card-bg: rgba(39, 76, 37, 0.08);
+  --nav-hover-bg: rgba(39, 76, 37, 0.10);
+  --header-bg: rgba(255, 255, 255, 0.6);
+
+  body { background: radial-gradient(ellipse at top left, #a8d8a6, #fff) fixed; }
+}
+
+.header {
+  background: var(--header-bg, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-link {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #16a34a;
+  background: var(--nav-hover-bg);
+}
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
 }
 
 h1,
@@ -80,11 +130,14 @@ p {
 }
 
 input, select, textarea {
-  border: 1px solid #d1d5db;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 8px 12px;
   width: 100%;
+  color: var(--text);
 }
+
 
 .connection-indicator {
   position: fixed;
@@ -121,3 +174,38 @@ input, select, textarea {
   background: #ef4444;
   box-shadow: 0 0 4px 2px rgba(239, 68, 68, 0.6);
 }
+
+.theme-toggle {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s;
+
+  &:hover { background: rgba(255, 255, 255, 0.15); }
+  .toggle-icon-half { fill: rgba(255, 255, 255, 0.95); }
+  .toggle-icon-ring { fill: rgba(255, 255, 255, 0.4); }
+}
+
+:root[data-theme="light"] {
+  .theme-toggle {
+    border-color: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.06);
+    &:hover { background: rgba(0, 0, 0, 0.12); }
+    .toggle-icon-half { fill: rgba(0, 0, 0, 0.8); }
+    .toggle-icon-ring { fill: rgba(0, 0, 0, 0.3); }
+  }
+}
+

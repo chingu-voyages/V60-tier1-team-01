@@ -7,6 +7,7 @@ import { Applications, setupApplicationFilters } from './pages/Applications/Appl
 import { deleteApplication, updateApplication } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
 import { initDashboard } from './pages/Dashboard/DashboardInit.js';
+import { supabase } from './utils/supabase.js';
 
 //url navigation
 const routes = {
@@ -83,6 +84,72 @@ async function render() {
  
 }
 
+// apply theme from saved preference or system setting
+const savedTheme = localStorage.getItem('theme');
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+document.documentElement.setAttribute('data-theme', savedTheme || systemTheme);
+
+// keep in sync with system if no manual override is saved
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (!localStorage.getItem('theme')) {
+    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  }
+});
+
 window.addEventListener('hashchange', render);
 render();
 eventListener();
+
+// online/offline indicator
+function createConnectionIndicator() {
+  const indicator = document.createElement('div');
+  indicator.id = 'connection-indicator';
+  indicator.className = 'connection-indicator';
+  document.body.appendChild(indicator);
+  return indicator;
+}
+
+async function updateConnectionIndicator() {
+  let indicator = document.getElementById('connection-indicator');
+  if (!indicator) indicator = createConnectionIndicator();
+
+  if (!supabase) { // debugging branch for renaming the .env file
+    indicator.innerHTML = '<span class="connection-dot connection-dot--offline"></span>offline';
+    return;
+  }
+
+  try { // probe supabase for response, or default to offline
+    const { error } = await supabase.from('applications').select('id').limit(1);
+    if (error) throw error;
+    indicator.innerHTML = '<span class="connection-dot connection-dot--online"></span>online';
+  } catch {
+    indicator.innerHTML = '<span class="connection-dot connection-dot--offline"></span>offline';
+  }
+}
+
+createConnectionIndicator();
+updateConnectionIndicator();
+setInterval(updateConnectionIndicator, 30000);
+
+// theme toggle button
+function createThemeToggle() {
+  const btn = document.createElement('button');
+  btn.id = 'theme-toggle';
+  btn.className = 'theme-toggle';
+  btn.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Toggle theme">
+      <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8V16Z" class="toggle-icon-half"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 4V8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16V20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" class="toggle-icon-ring"/>
+    </svg>
+  `;
+  document.body.appendChild(btn);
+
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+}
+
+createThemeToggle();
