@@ -1,3 +1,6 @@
+import { validateRequired, validateText, validateNotes } from "../../utils/validation";
+import { showError, clearError } from "../../utils/formUtils";
+
 export function openEditModal(app) {
   console.log("EDIT APP:", app);
 
@@ -30,8 +33,11 @@ export function openEditModal(app) {
           <small class="text-red-500"></small>
         </div>
 
-        <label class="text-sm mt-3 block">Notes</label>
-        <textarea id="notes-input" class="mt-1 w-full h-24 border p-2 rounded">${app.notes || ""}</textarea>
+        <div>
+          <label class="text-sm mt-3 block">Notes</label>
+          <textarea id="notes-input" class="mt-1 w-full h-24 border p-2 rounded">${app.notes || ""}</textarea>
+          <small class="text-red-500"></small>
+        </div>
 
         <div class="flex justify-between mt-4">
 
@@ -60,24 +66,15 @@ export function openEditModal(app) {
   const locationInput = modal.querySelector("#location-input");
   const notesInput = modal.querySelector("#notes-input");
 
-  // helper functions for validation UI
-  function showError(input, message) {
-    const errorElement = input.parentElement.querySelector("small");
-    errorElement.textContent = message;
-    input.style.border = "2px solid red";
-  }
+  // -------------------------
+  // Event listeners
+  // -------------------------
 
-  function clearError(input) {
-    const errorElement = input.parentElement.querySelector("small");
-    errorElement.textContent = "";
-    input.style.border = "";
-  }
-
-  // attach event listeners
   // clear validation error when user edits input
   companyInput.addEventListener("input", () => clearError(companyInput));
   roleInput.addEventListener("input", () => clearError(roleInput));
   locationInput.addEventListener("input", () => clearError(locationInput));
+  notesInput.addEventListener("input", () => clearError(notesInput));
 
   // close modal on cancel button click
   modal.querySelector("#close-button").addEventListener("click", () => {
@@ -86,44 +83,73 @@ export function openEditModal(app) {
 
   // handle save action for edit modal
   modal.querySelector("#save-button").addEventListener("click", ()=> {
-    // collect current required form values
+    // snapshot of current form values
     const inputs = {
-      company: companyInput.value.trim(),
-      role: roleInput.value.trim(),
-      location: locationInput.value.trim(),
+      company: companyInput.value,
+      role: roleInput.value,
+      location: locationInput.value,
+      notes: notesInput.value,
     };
 
     // track validation state
     let isValid = true;
 
-    // validate required fields and show errors if needed
-    if (!inputs.company) {
-      showError(companyInput, "Company is required");
-      companyInput.value = app.company;
+    // validate fields and show errors if needed
+    // COMPANY
+    let companyError =
+      validateRequired(inputs.company, "Company") ||
+      validateText(inputs.company, "Company");
+
+    if (companyError) {
+      showError(companyInput, companyError);
       isValid = false;
+    } else {
+      clearError(companyInput);
     }
 
-    if (!inputs.role) {
-      showError(roleInput, "Role is required");
-      roleInput.value = app.role;
+    // ROLE
+    let roleError =
+      validateRequired(inputs.role, "Role") ||
+      validateText(inputs.role, "Role");
+
+    if (roleError) {
+      showError(roleInput, roleError);
       isValid = false;
+    } else {
+      clearError(roleInput);
     }
 
-    if (!inputs.location) {
-      showError(locationInput, "Location is required");
-      locationInput.value = app.location;
+    // LOCATION
+    let locationError =
+      validateRequired(inputs.location, "Location") ||
+      validateText(inputs.location, "Location");
+
+    if (locationError) {
+      showError(locationInput, locationError);
       isValid = false;
+    } else {
+      clearError(locationInput);
+    }
+
+    // NOTES
+    let notesError = validateNotes(inputs.notes);
+
+    if (notesError) {
+      showError(notesInput, notesError);
+      isValid = false;
+    } else {
+      clearError(notesInput);
     }
 
     // stop execution if validation fails
     if (!isValid) return;
 
-    // build updated application object
+    // build updated application object (temporary step before persistence)
     const newApp = {
       company: inputs.company,
       role: inputs.role,
       location: inputs.location,
-      notes: notesInput.value,
+      notes: inputs.notes,
     };
 
     // log updated data (temporary step before persistence)
