@@ -2,6 +2,7 @@ import { validateRequired, validateText, validateNotes } from "../../utils/valid
 import { showError, clearError } from "../../utils/formUtils";
 
 export function openEditModal(app) {
+  // debug: log selected app
   console.log("EDIT APP:", app);
 
   const modal = document.getElementById("edit-modal");
@@ -83,7 +84,7 @@ export function openEditModal(app) {
 
   // handle save action for edit modal
   modal.querySelector("#save-button").addEventListener("click", ()=> {
-    // snapshot of current form values
+    // get current form values
     const inputs = {
       company: companyInput.value,
       role: roleInput.value,
@@ -144,7 +145,12 @@ export function openEditModal(app) {
     // stop execution if validation fails
     if (!isValid) return;
 
-    // build updated application object (temporary step before persistence)
+    // TODO: implement application update
+    // - persist changes
+    // - remove console.log
+    // - refresh UI after update
+
+    // build updated application object
     const newApp = {
       company: inputs.company,
       role: inputs.role,
@@ -152,7 +158,7 @@ export function openEditModal(app) {
       notes: inputs.notes,
     };
 
-    // log updated data (temporary step before persistence)
+    // debug: log updated data
     console.log(newApp);
 
     // close modal after successful update

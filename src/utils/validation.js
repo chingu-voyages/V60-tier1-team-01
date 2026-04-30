@@ -1,4 +1,6 @@
-// utils/validation.js
+// Centralized validation utilities used for both:
+// - creating a new job application
+// - editing an existing application
 
 const textRegex = /^[a-zA-Z0-9\s\-&.,']+$/;
 

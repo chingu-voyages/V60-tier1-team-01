@@ -1,4 +1,6 @@
-// helper functions for validation UI
+// Utility functions for displaying form validation errors in the UI
+// Used to create and edit application forms
+
 export function showError(input, message) {
   const errorElement = input.parentElement.querySelector("small");
   errorElement.textContent = message;
