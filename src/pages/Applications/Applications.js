@@ -69,22 +69,5 @@ export function setupApplicationFilters(onFilterChange) {
     console.log(viewMode);
     onFilterChange();
   });
-
-  // handle edit click
-  document.addEventListener("click", async (e) => {
-    const editBtn = e.target.closest("[data-edit]");
-    if (!editBtn) return;
-
-    const id = editBtn.dataset.edit;
-    
-    // fetch all applications
-    const applications = await getApplications();
-    
-    // find specific app
-    const app = applications.find(a => String(a.id) === String(id));
-
-    if (app) {
-      openEditModal(app);
-    }
-  });
+  
 }

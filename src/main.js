@@ -8,6 +8,8 @@ import { deleteApplication, updateApplication } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
 import { initDashboard } from './pages/Dashboard/DashboardInit.js';
 import { supabase } from './utils/supabase.js';
+import { openEditModal } from './components/applications/editModal.js';
+import { getApplications } from './utils/storage.js';
 
 //url navigation
 const routes = {
@@ -50,12 +52,25 @@ async function eventListener() {
         await render();
       });
     }
+
+    // handle edit application click
+    const editBtn = e.target.closest('[data-edit]');
+    if (editBtn) {
+      const id = editBtn.dataset.edit;
+
+      // fetch all applications
+      const applications = await getApplications();
+
+      // find specific application
+      const app = applications.find(a => String(a.id) === String(id));
+      
+      // open modal with selected appplication
+      if (app) {
+        openEditModal(app);
+      }
+    }
   });
 
-
-
-
- 
 }
 
 //page renderer for dynamic loading
