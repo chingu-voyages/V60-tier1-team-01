@@ -3,6 +3,7 @@ import { renderCards } from '../../components/applications/renderCards.js';
 import { renderApplications } from '../../components/applications/renderTable.js';
 import { renderFilterButtons } from '../../components/applications/renderStatusFilters.js';
 import { renderViewToggle } from '../../components/applications/renderViewToggle.js';
+import { openEditModal } from '../../components/applications/editModal.js';
 
 // ===== state =====
 let activeFilter = "All";
@@ -41,6 +42,9 @@ export async function Applications() {
           : renderApplications(filteredApplications)
         }
       </div>
+
+      <!-- Modal Container -->
+      <div id="edit-modal" class="hidden"></div>
     </main>
   `;
 }
@@ -62,7 +66,7 @@ export function setupApplicationFilters(onFilterChange) {
 
   toggle.addEventListener("change", () => {
     viewMode = toggle.checked ? "table" : "cards";
-    console.log(viewMode);
     onFilterChange();
   });
+  
 }
