@@ -1,9 +1,8 @@
 import { validateRequired, validateText, validateNotes } from "../../utils/validation";
 import { showError, clearError } from "../../utils/formUtils";
+import { updateApplication } from "../../utils/storage";
 
-export function openEditModal(app) {
-  // debug: log selected app
-  console.log("EDIT APP:", app);
+export function openEditModal(app, onSaveSuccess) {
 
   const modal = document.getElementById("edit-modal");
 
@@ -83,7 +82,7 @@ export function openEditModal(app) {
   });
 
   // handle save action for edit modal
-  modal.querySelector("#save-button").addEventListener("click", ()=> {
+  modal.querySelector("#save-button").addEventListener("click", async ()=> {
     // get current form values
     const inputs = {
       company: companyInput.value,
@@ -143,25 +142,47 @@ export function openEditModal(app) {
     }
 
     // stop execution if validation fails
-    if (!isValid) return;
+    if (!isValid) return;    
 
-    // TODO: implement application update
-    // - persist changes
-    // - remove console.log
-    // - refresh UI after update
+    // build an empty updated application object to populate
+    const updatedData = {};
+    
+    // identify only the fields effectively changed comparing 
+    // each field with the original application value
+    if (inputs.company.trim() !== app.company) {
+      updatedData.company = inputs.company.trim();
+    }
+    if (inputs.role.trim() !== app.role) {
+      updatedData.role = inputs.role.trim();
+    }
+    if (inputs.location.trim() !== app.location) {
+      updatedData.location = inputs.location.trim();
+    }
+    if (inputs.notes.trim() !== (app.notes || "")) {
+      updatedData.notes = inputs.notes.trim();
+    }
 
-    // build updated application object
-    const newApp = {
-      company: inputs.company,
-      role: inputs.role,
-      location: inputs.location,
-      notes: inputs.notes,
-    };
+    // check if there is actually anything to update
+    if (Object.keys(updatedData).length === 0) {
+      modal.classList.add("hidden");
+      return; // exit without saving any changes
+    }    
 
-    // debug: log updated data
-    console.log(newApp);
+    try {
+      await updateApplication(app.id, updatedData);
 
-    // close modal after successful update
-    modal.classList.add("hidden");
+      // close modal after successful update
+      modal.classList.add("hidden");
+
+      // trigger UI refresh by calling the provided callback ('render' in this case)
+      if (onSaveSuccess) {
+        await onSaveSuccess();
+      }
+
+    } catch (error) {
+        console.error("Error while updating application:", error);
+        alert("Something went wrong while saving your changes.");
+    }
+
   })
 }

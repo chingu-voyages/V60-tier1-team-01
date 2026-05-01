@@ -66,7 +66,6 @@ export function setupApplicationFilters(onFilterChange) {
 
   toggle.addEventListener("change", () => {
     viewMode = toggle.checked ? "table" : "cards";
-    console.log(viewMode);
     onFilterChange();
   });
   
