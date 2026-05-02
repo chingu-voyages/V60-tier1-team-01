@@ -124,6 +124,8 @@ function createConnectionIndicator() {
   return indicator;
 }
 
+let wasOffline = false;
+
 async function updateConnectionIndicator() {
   let indicator = document.getElementById('connection-indicator');
   if (!indicator) indicator = createConnectionIndicator();
@@ -143,7 +145,7 @@ async function updateConnectionIndicator() {
       const flushed = await flushQueue();
       if (flushed > 0) {
         indicator.innerHTML = `<span class="connection-dot connection-dot--online"></span>${flushed} offline change${flushed > 1 ? 's' : ''} synced`;
-        await render();
+        await render(); // refresh UI with up-to-date data
         setTimeout(() => {
           indicator.innerHTML = '<span class="connection-dot connection-dot--online"></span>online';
         }, 4000);
@@ -159,8 +161,6 @@ async function updateConnectionIndicator() {
     indicator.innerHTML = `<span class="connection-dot connection-dot--offline"></span>offline${queuedText}`;
   }
 }
-
-let wasOffline = false;
 
 createConnectionIndicator();
 updateConnectionIndicator();
