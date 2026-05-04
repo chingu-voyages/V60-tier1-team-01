@@ -164,7 +164,7 @@ async function updateConnectionIndicator() {
 
 createConnectionIndicator();
 updateConnectionIndicator();
-setInterval(updateConnectionIndicator, 30000);
+setInterval(updateConnectionIndicator, 5000);
 
 // theme toggle button
 function createThemeToggle() {

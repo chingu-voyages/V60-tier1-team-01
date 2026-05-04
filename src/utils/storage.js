@@ -9,6 +9,7 @@ const QUEUE_KEY = 'offline_queue';
 // probe supabase to check if we have a live connection
 async function isOnline() {
   if (!supabase) return false;
+  if (!navigator.onLine) return false; // fast path — no network at all
   try {
     const { error } = await supabase.from('applications').select('id').limit(1);
     return !error;
