@@ -124,6 +124,8 @@ function createConnectionIndicator() {
   return indicator;
 }
 
+// edge-trigger flag: tracks whether the *previous* poll was offline, not the current state.
+// used to detect the offline>online transition so we know when to flush the queue.
 let wasOffline = false;
 
 async function updateConnectionIndicator() {
@@ -139,13 +141,14 @@ async function updateConnectionIndicator() {
     const { error } = await supabase.from('applications').select('id').limit(1);
     if (error) throw error;
 
-    // just came back online — flush the queue
+    // offline>online transition: reset the flag before flushing so that if flushQueue
+    // itself triggers another poll, it doesn't re-enter this branch
     if (wasOffline) {
       wasOffline = false;
       const flushed = await flushQueue();
       if (flushed > 0) {
         indicator.innerHTML = `<span class="connection-dot connection-dot--online"></span>${flushed} offline change${flushed > 1 ? 's' : ''} synced`;
-        await render(); // refresh UI with up-to-date data
+        await render(); // refresh UI with up to date data
         setTimeout(() => {
           indicator.innerHTML = '<span class="connection-dot connection-dot--online"></span>online';
         }, 4000);
@@ -164,6 +167,7 @@ async function updateConnectionIndicator() {
 
 createConnectionIndicator();
 updateConnectionIndicator();
+// poll every 5 seconds since there's no Supabase realtime subscription for connection state
 setInterval(updateConnectionIndicator, 5000);
 
 // theme toggle button

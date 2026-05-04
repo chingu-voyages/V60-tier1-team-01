@@ -7,9 +7,11 @@ const CACHE_KEY = 'cached_applications';
 const QUEUE_KEY = 'offline_queue';
 
 // probe supabase to check if we have a live connection
+// navigator.onLine is a fast but unreliable shortcut (it only checks network adapter state,
+// not actual reachability), so we follow up with a real DB query as the source of truth
 async function isOnline() {
-  if (!supabase) return false;
-  if (!navigator.onLine) return false; // fast path — no network at all
+  if (!supabase) return false; // .env variables not set
+  if (!navigator.onLine) return false; // fast path - no network at all
   try {
     const { error } = await supabase.from('applications').select('id').limit(1);
     return !error;
@@ -48,6 +50,9 @@ if (useSupabase) {
 
   saveApplication = async (application) => {
     if (!await isOnline()) {
+      // assign a temporary local id and timestamp so the record can live in the cache
+      // immediately; flushQueue will discard both when inserting into Supabase so the
+      // DB can assign its own authoritative values
       const queued = { ...application, id: crypto.randomUUID(), created_at: new Date().toISOString() };
       enqueue({ type: 'save', payload: queued });
       const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '[]');
@@ -67,6 +72,7 @@ if (useSupabase) {
       const index = cache.findIndex(app => app.id === id);
       if (index !== -1) cache[index] = { ...cache[index], ...data };
       localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+      // returns undefined if index is -1 (record not in cache yet), which callers handle
       return cache[index];
     }
     const { data: current, error: fetchError } = await supabase.from('applications').select('status').eq('id', id).single();
@@ -167,6 +173,8 @@ export async function flushQueue() {
   for (const operation of queue) {
     try {
       if (operation.type === 'save') {
+        // strip the temporary local id and created_at assigned offline so Supabase
+        // can generate its own authoritative values on insert
         const { id, created_at, ...fields } = operation.payload;
         await supabase.from('applications').insert([fields]);
       } else if (operation.type === 'update') {
@@ -182,8 +190,9 @@ export async function flushQueue() {
   localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining));
 
   const flushed = queue.length - remaining.length;
+  // only re-fetch from Supabase if at least one operation succeeded; avoids
+  // an unnecessary round-trip when everything failed and stayed in the queue
   if (flushed > 0) {
-    // refresh cache from Supabase after flush
     const { data } = await supabase.from('applications').select('*').order('id');
     if (data) localStorage.setItem(CACHE_KEY, JSON.stringify(data));
   }
