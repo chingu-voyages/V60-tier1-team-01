@@ -16,19 +16,26 @@ export async function initDashboard() {
   
   
   renderLatestEntry(applications);
+
+  // re-render chart when system color scheme changes so legend text color updates
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    renderChart(stats);
+  });
 }
 
 function renderChart(stats) {
   const ctx = document.getElementById('myChart');
-  
-  // Destroy existing chart instance if it exists (prevents hover glitches)
+
   const existingChart = Chart.getChart(ctx);
   if (existingChart) {
     existingChart.destroy();
   }
 
+  const textColor = getComputedStyle(document.documentElement)
+    .getPropertyValue('--text').trim();
+
   new Chart(ctx, {
-    type: 'pie', // or 'pie' since your HTML ID says "piechart"
+    type: 'pie',
     data: {
       labels: ['Applied', 'Interview', 'Offer', 'Rejected'],
       datasets: [{
@@ -40,8 +47,12 @@ function renderChart(stats) {
     },
     options: {
       responsive: true,
-      scales: {
-        y: { beginAtZero: true }
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
       }
     }
   });

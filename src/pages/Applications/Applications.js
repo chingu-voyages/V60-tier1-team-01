@@ -3,6 +3,7 @@ import { renderCards } from '../../components/applications/renderCards.js';
 import { renderApplications } from '../../components/applications/renderTable.js';
 import { renderFilterButtons } from '../../components/applications/renderStatusFilters.js';
 import { renderViewToggle } from '../../components/applications/renderViewToggle.js';
+import { openEditModal } from '../../components/applications/editModal.js';
 
 // ===== state =====
 let activeFilter = "All";
@@ -25,8 +26,8 @@ export async function Applications() {
   return `
     <main class="pt-20 px-6 max-w-6xl mx-auto">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 mb-9">
-        <h3 class="text-white font-bold text-center sm:text-start">Status:</h3>
-        <div class="flex overflow-hidden bg-white border divide-x rounded-lg">
+        <h3 class="font-bold text-center sm:text-start">Status:</h3>
+        <div class="card flex overflow-hidden border divide-x rounded-lg">
           ${renderFilterButtons(activeFilter)}
         </div>
       </div>
@@ -41,6 +42,9 @@ export async function Applications() {
           : renderApplications(filteredApplications)
         }
       </div>
+
+      <!-- Modal Container -->
+      <div id="edit-modal" class="hidden"></div>
     </main>
   `;
 }
@@ -62,7 +66,7 @@ export function setupApplicationFilters(onFilterChange) {
 
   toggle.addEventListener("change", () => {
     viewMode = toggle.checked ? "table" : "cards";
-    console.log(viewMode);
     onFilterChange();
   });
+  
 }
