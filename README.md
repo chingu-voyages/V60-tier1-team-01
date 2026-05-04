@@ -1,14 +1,14 @@
 # Project Overview
 
-Jobify is an application management system for busy job seekers to organize and track their job applications all in one place. Allowing the user to enter as many applications as they need, sort and filter them, and view analytics and metrics in a visual dashboard. 
+Jobify is an application management system for busy job seekers to organize and track their job applications all in one place. Add, edit, and delete applications, filter and sort by status, and view analytics and metrics in a visual dashboard. Jobify works offline — changes queue locally and sync to the database when your connection is restored.
 
 ## Stack
 
-- Vite
-- Tailwind CSS
-- Vanilla JS
-- Supabase
-- Chart.js
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?logo=chartdotjs&logoColor=white)
 
 
 ## Installation
@@ -42,7 +42,7 @@ Without an `.env` file, the app falls back to localStorage automatically, so you
 - [x] Your application must allow users to add a job application by entering at least the following fields: Company Name, Role, Date Applied, Location, Status.
 - [x] Users should be able to view all applications in a structured layout (table or cards). Each application must clearly display essential attributes.
 - [x] Users should be able to change the status of an existing application.
-- [ ] Users must be able to edit an existing application and be able to delete an application from the tracker.
+- [x] Users must be able to edit an existing application and be able to delete an application from the tracker.
 - [x] Data is stored for use in repeat sessions.
 - [x] Users must be able to filter applications by status.
 - [x] Your application must include a dashboard or summary section displaying basic information such as:
@@ -72,7 +72,7 @@ Without an `.env` file, the app falls back to localStorage automatically, so you
 - [ ] Integrate AI into your app to provide users with job search performance insights.
 - [ ] Allow users to have application deadline and a deadline approaching warning.
 - [ ] Allow users to have a trend analysis for applications/interviews per month chart.
-- [ ] Allow users to have offline mode.
+- [x] Allow users to have offline mode.
 
 </details>
 

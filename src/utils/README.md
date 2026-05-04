@@ -18,14 +18,22 @@ If `VITE_SUPABASE_URL` is present in `.env`, all functions use Supabase. If not,
 
 To add a new function, add it to both the Supabase branch and the localStorage branch, then export it at the bottom.
 
+## validation.js
+
+Form validation helpers. Each function returns an error message string if invalid, or `null` if valid.
+
+- `validateRequired(value, fieldName)` - checks that a field is not empty
+- `validateText(value, fieldName)` - checks that a text field meets character constraints
+- `validateDate(value)` - checks that a date is present and not in the future
+- `validateNotes(value)` - checks that notes don't exceed the character limit
+
+## formUtils.js
+
+DOM helpers for displaying and clearing inline validation errors on form inputs.
+
+- `showError(input, message)` - marks an input invalid and renders an error message beneath it
+- `clearError(input)` - removes the error state from an input
+
 ## supabase.js
 
 Initializes the Supabase client using environment variables. Returns `null` if the env variables are not set, which triggers the localStorage fallback in `storage.js`.
-
-## auth.js (coming soon)
-
-Handles GitHub OAuth via Supabase Auth.
-
-- `signInWithGitHub()` - redirects to GitHub for authentication
-- `signOut()` - signs the current user out
-- `getUser()` - returns the currently authenticated user, or `null`
