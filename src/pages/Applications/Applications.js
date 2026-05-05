@@ -25,9 +25,9 @@ export async function Applications() {
   const filteredApplications = filterApplications(applications, activeFilter);
   return `
     <main class="pt-20 px-6 max-w-6xl mx-auto">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 mb-9">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-9">
         <h3 class="font-bold text-center sm:text-start">Status:</h3>
-        <div class="card flex overflow-hidden border divide-x rounded-lg">
+        <div class="card inline-flex w-fit overflow-hidden border divide-x rounded-lg">
           ${renderFilterButtons(activeFilter)}
         </div>
       </div>
