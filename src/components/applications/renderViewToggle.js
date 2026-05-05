@@ -12,8 +12,8 @@ export function renderViewToggle(viewMode) {
 
         <input 
           type="checkbox" 
-          id="view-toggle" 
-          class="sr-only peer" 
+          id="view-toggle"
+          class="hidden peer" 
           ${isTableChecked}
         >
 
