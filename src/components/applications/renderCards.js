@@ -31,7 +31,7 @@ export function renderCards(applications) {
           <div class="flex justify-between mt-4">
 
             <button 
-              class="border border-emerald-700 text-emerald-600 dark:text-emerald-500 px-3 py-1 rounded text-sm hover:bg-emerald-700 hover:text-white transition"
+              class="border border-emerald-700 text-emerald-700 dark:border-green-600 dark:text-green-600 px-3 py-1 rounded text-sm hover:bg-emerald-700 dark:hover:bg-green-700 hover:text-white transition"
               data-edit="${app.id}"
             >
               Edit

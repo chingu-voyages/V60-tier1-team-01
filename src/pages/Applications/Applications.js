@@ -25,18 +25,18 @@ export async function Applications() {
   const filteredApplications = filterApplications(applications, activeFilter);
   return `
     <main class="pt-20 px-6 max-w-6xl mx-auto">
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-9">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-9 pt-4">
         <h3 class="font-bold text-center sm:text-start">Status:</h3>
         <div class="card inline-flex w-fit overflow-hidden border divide-x rounded-lg">
           ${renderFilterButtons(activeFilter)}
         </div>
       </div>
 
-      <h1 class="text-center">Applications</h1>
+      <h1 class="text-center pt-3 pb-1">Applications</h1>
 
       ${renderViewToggle(viewMode)}
 
-      <div id="applications-list">
+      <div id="applications-list" class="pt-4">
         ${viewMode === "cards" 
           ? renderCards(filteredApplications) 
           : renderApplications(filteredApplications)
