@@ -1,6 +1,6 @@
 # Project Overview
 
-Jobify is an application management system for busy job seekers to organize and track their job applications all in one place. Add, edit, and delete applications, filter and sort by status, and view analytics and metrics in a visual dashboard. Jobify works offline — changes queue locally and sync to the database when your connection is restored.
+Jobify is an application management system for busy job seekers to organize and track their job applications all in one place. Add, edit, and delete applications, filter and sort by status, and view analytics and metrics in a visual dashboard. Jobify works offline: changes queue locally and sync to the database when your connection is restored.
 
 ## Stack
 
@@ -9,7 +9,6 @@ Jobify is an application management system for busy job seekers to organize and 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)
 ![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?logo=chartdotjs&logoColor=white)
-
 
 ## Installation
 
@@ -27,7 +26,7 @@ npm run dev
 
 ### Database configuration
 
-You will need an `.env` file configured with the parameters outlined in `.env.example` for the database to connect to Supabase. 
+You will need an `.env` file configured with the parameters outlined in `.env.example` for the database to connect to Supabase.
 
 Without an `.env` file, the app falls back to localStorage automatically, so you can develop and test without a Supabase connection.
 
