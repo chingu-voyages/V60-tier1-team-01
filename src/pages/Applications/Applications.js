@@ -36,7 +36,7 @@ export async function Applications() {
 
       ${renderViewToggle(viewMode)}
 
-      <div id="applications-list" class="pt-4">
+      <div id="applications-list">
         ${viewMode === "cards" 
           ? renderCards(filteredApplications) 
           : renderApplications(filteredApplications)
