@@ -19,12 +19,12 @@ export function renderViewToggle(viewMode) {
 
         <div 
           class="relative mx-3 w-9 h-5 bg-gray-400 dark:bg-gray-500 rounded-full
-                      peer-checked:bg-[#274C25] 
-                      dark:peer-checked:bg-green-800
-                      after:content-[''] after:absolute after:top-0.5 after:left-0.5
-                      after:bg-white after:rounded-full after:h-4 after:w-4
-                      after:transition-all
-                      peer-checked:after:translate-x-full">
+            peer-checked:bg-[#274C25] 
+            dark:peer-checked:bg-green-800
+            after:content-[''] after:absolute after:top-0.5 after:left-0.5
+            after:bg-white after:rounded-full after:h-4 after:w-4
+            after:transition-all
+            peer-checked:after:translate-x-full">
         </div>
 
         <span class="select-none text-sm font-medium text-heading">

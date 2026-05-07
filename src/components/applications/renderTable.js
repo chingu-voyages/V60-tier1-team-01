@@ -1,7 +1,26 @@
 const tableStyles = {
-  cell: "whitespace-nowrap border-y border-[#274C25]/15 dark:border-white/12",
-  cellLeft: "whitespace-nowrap border-y border-[#274C25]/15 dark:border-white/12 border-l rounded-l-lg",
-  cellRight: "whitespace-nowrap border-y border-[#274C25]/15 dark:border-white/12 border-r rounded-r-lg",
+  cell: `
+    whitespace-nowrap
+    border-y
+    border-[#274C25]/15
+    dark:border-white/12
+  `,
+
+  cellLeft: `
+    whitespace-nowrap
+    border-y border-l
+    border-[#274C25]/15
+    dark:border-white/12
+    rounded-l-lg
+  `,
+
+  cellRight: `
+    whitespace-nowrap
+    border-y border-r
+    border-[#274C25]/15
+    dark:border-white/12
+    rounded-r-lg
+  `,
 };
 
 export function renderApplications(applications) {
