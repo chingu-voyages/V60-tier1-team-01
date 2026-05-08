@@ -30,6 +30,24 @@ You will need an `.env` file configured with the parameters outlined in `.env.ex
 
 Without an `.env` file, the app falls back to localStorage automatically, so you can develop and test without a Supabase connection.
 
+## Using the App
+
+### Adding an application
+
+Click **Add Application** in the nav. Fill in Company Name, Role, Date Applied, Location, and Status. All fields are required except Notes. Submit the form to save it. Validation errors appear inline if anything is missing or invalid.
+
+### Viewing and managing applications
+
+Click **Applications** in the nav to see all your entries. Toggle between table and card view using the button in the top right. Filter by status using the buttons above the list. To update a status inline, click the status to use the dropdown directly in the row or card. To edit other fields, click the **Edit** button to open a prefilled modal. To remove an entry, click **Delete**.
+
+### Dashboard
+
+Click **Dashboard** in the nav for an overview of your job search. The top section shows total application counts and recent activity. Below that, conversion rate metrics break down your Applied > Interview, Interview > Offer, and rejection rates, along with your average response time. A pie chart visualizes your application statuses.
+
+### Offline mode
+
+Jobify works without an internet connection. If your connection drops, a status indicator appears in the bottom corner of the screen showing **offline** and a count of any pending changes. Write operations (add, edit, delete) are queued locally and applied immediately to the UI so you can keep working. When your connection is restored, the queue flushes automatically and the indicator briefly shows how many changes were synced.
+
 <details>
 <summary><strong>Acceptance Criteria</strong></summary>
 
