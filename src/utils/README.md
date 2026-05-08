@@ -15,17 +15,29 @@ If `VITE_SUPABASE_URL` is present in `.env`, all functions use Supabase. If not,
 - `saveApplication(data)` - insert a new application
 - `updateApplication(id, data)` - update an existing application by ID. Also writes to `status_history` if the status changed.
 - `deleteApplication(id)` - delete an application by ID
+- `flushQueue()` - drains the offline queue and replays each operation against Supabase. Returns the number of operations successfully synced. Called automatically by `main.js` when the connection comes back online.
+- `getQueueLength()` - returns the number of operations currently pending in the offline queue. Used by the connection indicator to show a queued count while offline.
+
+When offline, write operations (`saveApplication`, `updateApplication`, `deleteApplication`) enqueue themselves to localStorage instead of calling Supabase, and apply the change to an in-memory cache so the UI stays responsive. The queue is replayed in order when `flushQueue` is called.
 
 To add a new function, add it to both the Supabase branch and the localStorage branch, then export it at the bottom.
+
+## validation.js
+
+Form validation helpers. Each function returns an error message string if invalid, or `null` if valid.
+
+- `validateRequired(value, fieldName)` - checks that a field is not empty
+- `validateText(value, fieldName)` - checks that a text field meets character constraints
+- `validateDate(value)` - checks that a date is present and not in the future
+- `validateNotes(value)` - checks that notes don't exceed the character limit
+
+## formUtils.js
+
+DOM helpers for displaying and clearing inline validation errors on form inputs.
+
+- `showError(input, message)` - marks an input invalid and renders an error message beneath it
+- `clearError(input)` - removes the error state from an input
 
 ## supabase.js
 
 Initializes the Supabase client using environment variables. Returns `null` if the env variables are not set, which triggers the localStorage fallback in `storage.js`.
-
-## auth.js (coming soon)
-
-Handles GitHub OAuth via Supabase Auth.
-
-- `signInWithGitHub()` - redirects to GitHub for authentication
-- `signOut()` - signs the current user out
-- `getUser()` - returns the currently authenticated user, or `null`
