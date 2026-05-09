@@ -25,7 +25,7 @@ const tableStyles = {
 
 export function renderApplications(applications) {
   return `
-    <div class="w-full md:w-3/4 mx-auto mt-6">
+    <div class="w-full lg:w-3/4 lg:mx-auto mt-6">
       <!-- Scroll container for the entire table block -->
       <div class="overflow-x-auto pb-4">
         
@@ -67,7 +67,7 @@ export function renderApplications(applications) {
                 </td>
                 
                 <td class="py-4 px-6 ${tableStyles.cellRight}">
-                  <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div class="flex justify-end gap-2 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
                     <!-- Edit button -->
                     <button data-edit="${app.id}" class="hover:text-orange-500">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
