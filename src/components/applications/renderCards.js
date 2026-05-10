@@ -1,7 +1,7 @@
 // Renders job applications as a responsive grid of cards
 export function renderCards(applications) {
   return `
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 pt-3">
       ${applications.map(app => `
         <div class="card p-6 group flex flex-col mb-2">
           
@@ -31,14 +31,27 @@ export function renderCards(applications) {
           <div class="flex justify-between mt-4">
 
             <button 
-              class="border border-emerald-700 text-emerald-600 dark:text-emerald-500 px-3 py-1 rounded text-sm hover:bg-emerald-700 hover:text-white transition"
+              class="
+                border border-[#274C25] dark:border-green-600
+                text-[#274C25] dark:text-green-600
+                px-3 py-1 rounded text-sm
+                hover:bg-[#274C25] dark:hover:bg-green-800
+                hover:text-white
+                transition
+              "
               data-edit="${app.id}"
             >
               Edit
             </button>
 
             <button 
-              class="border border-red-500 text-red-500 px-3 py-1 rounded text-sm hover:bg-red-500 hover:text-white transition"
+              class="
+                border border-red-500
+                text-red-500
+                px-3 py-1 rounded text-sm
+                hover:bg-red-500 hover:text-white
+                transition
+              "
               data-delete="${app.id}"
             >
               Delete

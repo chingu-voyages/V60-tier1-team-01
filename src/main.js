@@ -4,7 +4,7 @@ import { Footer } from './components/layout/Footer/Footer.js';
 import { Home } from './pages/Home/Home.js';
 import { AddApplication } from './pages/AddApplication/AddApplication.js';
 import { Applications, setupApplicationFilters } from './pages/Applications/Applications.js';
-import { deleteApplication, updateApplication, getApplications } from './utils/storage.js';
+import { deleteApplication, updateApplication, getApplications, flushQueue, getQueueLength } from './utils/storage.js';
 import { Dashboard } from './pages/Dashboard/Dashboard.js';
 import { initDashboard } from './pages/Dashboard/DashboardInit.js';
 import { supabase } from './utils/supabase.js';
@@ -124,6 +124,10 @@ function createConnectionIndicator() {
   return indicator;
 }
 
+// edge-trigger flag: tracks whether the *previous* poll was offline, not the current state.
+// used to detect the offline>online transition so we know when to flush the queue.
+let wasOffline = false;
+
 async function updateConnectionIndicator() {
   let indicator = document.getElementById('connection-indicator');
   if (!indicator) indicator = createConnectionIndicator();
@@ -136,15 +140,35 @@ async function updateConnectionIndicator() {
   try { // probe supabase for response, or default to offline
     const { error } = await supabase.from('applications').select('id').limit(1);
     if (error) throw error;
+
+    // offline>online transition: reset the flag before flushing so that if flushQueue
+    // itself triggers another poll, it doesn't re-enter this branch
+    if (wasOffline) {
+      wasOffline = false;
+      const flushed = await flushQueue();
+      if (flushed > 0) {
+        indicator.innerHTML = `<span class="connection-dot connection-dot--online"></span>${flushed} offline change${flushed > 1 ? 's' : ''} synced`;
+        await render(); // refresh UI with up to date data
+        setTimeout(() => {
+          indicator.innerHTML = '<span class="connection-dot connection-dot--online"></span>online';
+        }, 4000);
+        return;
+      }
+    }
+
     indicator.innerHTML = '<span class="connection-dot connection-dot--online"></span>online';
   } catch {
-    indicator.innerHTML = '<span class="connection-dot connection-dot--offline"></span>offline';
+    wasOffline = true;
+    const queued = getQueueLength();
+    const queuedText = queued > 0 ? ` · ${queued} queued` : '';
+    indicator.innerHTML = `<span class="connection-dot connection-dot--offline"></span>offline${queuedText}`;
   }
 }
 
 createConnectionIndicator();
 updateConnectionIndicator();
-setInterval(updateConnectionIndicator, 30000);
+// poll every 5 seconds since there's no Supabase realtime subscription for connection state
+setInterval(updateConnectionIndicator, 5000);
 
 // theme toggle button
 function createThemeToggle() {

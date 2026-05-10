@@ -16,26 +16,26 @@ export function openEditModal(app, onSaveSuccess) {
         </h2>
         
         <div>
-          <label class="text-sm">Company</label>
-          <input id="company-input" class="mt-1 w-full border p-2 rounded" value="${app.company}" />
+          <label for="company-input" class="text-sm">Company</label>
+          <input id="company-input" class="mt-1" value="${app.company}" />
           <small class="text-red-500"></small>
         </div>
         
         <div>
-          <label class="text-sm mt-3 block">Role</label>
-          <input id="role-input" class="mt-1 w-full border p-2 rounded" value="${app.role}" />
+          <label for="role-input" class="text-sm mt-3 block">Role</label>
+          <input id="role-input" class="mt-1" value="${app.role}" />
           <small class="text-red-500"></small>
         </div>
 
         <div>
-          <label class="text-sm mt-3 block">Location</label>
-          <input id="location-input" class="mt-1 w-full border p-2 rounded" value="${app.location}" />
+          <label for="location-input" class="text-sm mt-3 block">Location</label>
+          <input id="location-input" class="mt-1" value="${app.location}" />
           <small class="text-red-500"></small>
         </div>
 
         <div>
-          <label class="text-sm mt-3 block">Notes</label>
-          <textarea id="notes-input" class="mt-1 w-full h-24 border p-2 rounded">${app.notes || ""}</textarea>
+          <label for="notes-input" class="text-sm mt-3 block">Notes</label>
+          <textarea id="notes-input" class="mt-1">${app.notes || ""}</textarea>
           <small class="text-red-500"></small>
         </div>
 
