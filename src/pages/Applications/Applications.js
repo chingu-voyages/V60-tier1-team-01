@@ -37,8 +37,8 @@ export async function Applications() {
       ${renderViewToggle(viewMode)}
 
       <div id="applications-list">
-        ${viewMode === "cards" 
-          ? renderCards(filteredApplications) 
+        ${(viewMode === "cards" || window.innerWidth < 640)
+          ? renderCards(filteredApplications)
           : renderApplications(filteredApplications)
         }
       </div>

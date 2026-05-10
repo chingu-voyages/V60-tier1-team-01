@@ -12,7 +12,7 @@
                     <!--top total ?chart-->
                     <div class="flex flex-col md:flex-row gap-6">
                          <!--total applications chart-->
-                         <div class="flex-1  card p-6 md:p-8 text-center">
+                         <div class="flex-1 card p-6 md:p-8 text-center flex flex-col justify-center">
                               <h2 class="text-lg md:text-xl font-semibold mb-2 ">TOTAL APPLICATIONS</h2>
                               <p id="totalapps" class="text-3xl md:text-5xl font-bold"></p>
                          </div>
@@ -57,18 +57,41 @@
                          <!--stats-->
                          <div id="stats" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                              <div class="card p-4 text-center">
+                              <div class="card p-4 text-center flex flex-col justify-center">
                                    <h2 class="text-sm md:text-base ">Average Time to Response</h2>
                                    <p id="averageResponseRate" class="text-xl md:text-2xl font-bold"></p>
 
                               </div>
+
+                              <!--conversion rate-->
+                         <div class="card p-6 md:p-8 text-center">
+
+                          <h2 class="text-lg font-semibold mb-4">
+                                   Conversion Rate
+                              </h2>
+                              <div class="grid grid-cols-1 gap-4">
+                                   <div>
+                                        <h3 class="text-sm">Applied to Interview Rate</h3>
+                                        <span id="appliedToInterviewRate" class="text-2xl font-bold"></span>
+                                   </div>
+                                   <div>
+                                        <h3 class="text-sm">Interview to Offer Rate</h3>
+                                        <span id="interviewToOfferRate" class="text-2xl font-bold"></span>
+                                   </div>
+                                   
+
+
+
+                              </div>
+
+                         </div>
 
                               
 
                          </div>
                </div>
                     <!-- right side -->
-                    <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6 h-full">
                          <!--recent applications-->
                          <div class="card p-6 md:p-8">
                               <h2 class="text-lg font-semibold mb-4 text-center">Recent Entry</h2>
@@ -109,7 +132,7 @@
 
                          </div>
                          <!--response rate-->
-                         <div class="card p-6 md:p-8 text-center">
+                         <div class="card p-6 md:p-8 text-center flex-1 flex flex-col justify-center">
 
                           <h2 class="text-lg font-semibold mb-4">
                                    Statuses
@@ -133,28 +156,7 @@
                               </div>
 
                          </div>
-                         <!--conversion rate-->
-                         <div class="card p-6 md:p-8 text-center">
-
-                          <h2 class="text-lg font-semibold mb-4">
-                                   Conversion Rate
-                              </h2>
-                              <div class="grid grid-cols-1 gap-4">
-                                   <div>
-                                        <h3 class="text-sm">Applied to Interview Rate</h3>
-                                        <span id="appliedToInterviewRate" class="text-2xl font-bold"></span>
-                                   </div>
-                                   <div>
-                                        <h3 class="text-sm">Interview to Offer Rate</h3>
-                                        <span id="interviewToOfferRate" class="text-2xl font-bold"></span>
-                                   </div>
-                                   
-
-
-
-                              </div>
-
-                         </div>
+                         
                     </div>
 
                

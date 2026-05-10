@@ -73,9 +73,17 @@ function renderRates(stats) {
 
 
 function renderConversionRates(stats, status_history) {
-  // make sets of applications in only interview or offer status
+  // make sets of applications in only interview THEN offer status
   const interviewedIds = new Set(status_history.filter(r => r.status === 'interview').map(r => r.application_id));
-  const offeredIds = new Set(status_history.filter(r => r.status === 'offer').map(r => r.application_id));
+  const offeredIds = new Set(
+    // filter out only apps that were in interview THEN offer 
+    [...interviewedIds].filter(id => {
+      const firstInterview = Math.min(...status_history.filter(r => r.application_id === id && r.status === 'interview').map(r => new Date (r.changed_at)));
+      const firstOffer = Math.min(...status_history.filter(r => r.application_id === id && r.status === 'offer').map(r => new Date (r.changed_at)));
+      return isFinite(firstOffer) && firstOffer > firstInterview;
+    })
+  );
+
 
   // percentage of applications that went from applied to interview status
   const appliedToInterviewRate = stats.total === 0 ? 0 :
@@ -105,7 +113,7 @@ function renderAverageResponseRate(stats, applications, status_history) {
   }
 
 
-  const averageResponseRate = (responseTimes.reduce((a,b) => a + b, 0) / responseTimes.length);
+  const averageResponseRate = (responseTimes.reduce((a,b) => a + b, 0) / responseTimes.length).toFixed(1);
   document.getElementById('averageResponseRate').textContent = `${averageResponseRate} days`;
 
 }

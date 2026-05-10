@@ -4,7 +4,7 @@ export function renderViewToggle(viewMode) {
   const isTableChecked = viewMode === "table" ? "checked" : "";  
 
   return `
-    <div class="flex justify-center mb-5">
+    <div class="hidden sm:flex justify-center mb-5">
       <label class="inline-flex items-center cursor-pointer">
         <span class="select-none text-sm font-medium text-heading">
           Cards
