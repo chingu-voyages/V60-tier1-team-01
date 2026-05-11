@@ -8,14 +8,20 @@ const QUEUE_KEY = 'offline_queue';
 
 // probe supabase to check if we have a live connection
 // navigator.onLine is a fast but unreliable shortcut (it only checks network adapter state,
-// not actual reachability), so we follow up with a real DB query as the source of truth
+// not actual reachability), so we follow up with a real DB query as the source of truth.
+// result is cached for 3 seconds so multiple calls within the same operation agree on state.
+let onlineCache = { value: null, at: 0 };
+
 async function isOnline() {
   if (!supabase) return false; // .env variables not set
   if (!navigator.onLine) return false; // fast path - no network at all
+  if (Date.now() - onlineCache.at < 3000) return onlineCache.value;
   try {
     const { error } = await supabase.from('applications').select('id').limit(1);
-    return !error;
+    onlineCache = { value: !error, at: Date.now() };
+    return onlineCache.value;
   } catch {
+    onlineCache = { value: false, at: Date.now() };
     return false;
   }
 }
@@ -100,6 +106,8 @@ if (useSupabase) {
     }
     const { error } = await supabase.from('applications').delete().eq('id', id);
     if (error) throw error;
+    const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || '[]');
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache.filter(app => app.id !== id)));
   }
 
   // status_history table functions
